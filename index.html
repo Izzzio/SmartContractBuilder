@@ -8,7 +8,8 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="assets/components/bootstrap/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/components/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/custom.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="assets/lte/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -42,6 +43,7 @@
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <i class="fas fa-bars"></i>
                 <span class="sr-only">Toggle navigation</span>
             </a>
         </nav>
@@ -70,6 +72,75 @@
         </section>
 
         <section class="content">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fab fa-ethereum"></i> Token contract <small style="color: white;">(Main Ethereum Network)</small></h3>
+                        </div>
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <label for="tkn_name">Token name:</label>
+                                            <input type="text" class="form-control input-lg" id="tkn_name" placeholder="MyNewProjectToken">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+                                                <label></label>
+                                            </div>
+                                            <span class="help-block">
+                                                Enter name of the project without spaces, usually 5-25 symbols.
+                                                Lower and uppercase can be used
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <label for="tkn_symbol">Token symbol:</label>
+                                            <input type="text" class="form-control input-lg" id="tkn_symbol" placeholder="NEW">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+                                                <label></label>
+                                            </div>
+                                            <span class="help-block">
+                                                Usually 3-4 Letters like ETH, BTC, NEO, WISH etc..
+                                                Please check that it’s unique before submission
+                                                <a href="https://etherscan.com/tokens">
+                                                (https://etherscan.com/tokens)
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label for="tkn_decimals">Decimals:</label>
+                                            <input type="number" class="form-control input-lg" id="tkn_decimals" placeholder="18" min="0" max="50" step="1">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+                                                <label></label>
+                                            </div>
+                                            <span class="help-block">
+                                                Defines the number of decimals for the token.
+                                                0-50 numerals are accepted. 18 as common practice
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
         </section>
     </div>
 
@@ -78,7 +149,6 @@
         reserved.
     </footer>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="assets/components/jquery/jquery.min.js"></script>
@@ -89,8 +159,6 @@
 <script src="assets/lte/js/adminlte.min.js"></script>
 <!-- SlimScroll -->
 <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="assets/lte/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="assets/lte/js/demo.js"></script>
 </body>
