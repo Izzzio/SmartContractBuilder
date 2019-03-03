@@ -351,4 +351,60 @@ $(function () {
     setup()
 
     $('[data-toggle="tooltip"]').tooltip()
+
+
+
+
+
+
+
+    i18next.init({
+
+        tName: 't', // --> appends $.t = i18next.t
+        i18nName: 'i18n', // --> appends $.i18n = i18next
+        handleName: 'localize', // --> appends $(selector).localize(opts);
+        selectorAttr: 'data-i18n', // selector for translating elements
+        targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if different than itself)
+        optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
+        useOptionsAttr: false, // see optionsAttr
+        parseDefaultValueFromContent: true, // parses default values from content ele.val or ele.text
+
+        lng: 'en',
+        debug: true,
+        ns: {
+            namespaces: ['common', 'myModule'],
+            defaultNS: 'common'
+        },
+        resources: {
+            en: {
+                common: {
+                    "menu": {
+                        "create": "CREATE"
+                    },
+                },
+                myModule: {
+                    "key": "MODULE hello world"
+                }
+            }
+        }
+    }, (err, t) => {
+        // initialized and ready to go!
+        //const hw = i18next.t('key'); // hw = 'hello world'
+        updateContent();
+    });
+
+    function updateContent() {
+        const hw = i18next.t('common:menu.create');
+        alert(hw);
+
+        $(".sidebar").localize();
+    }
+
+    function changeLng(lng) {
+        i18next.changeLanguage(lng);
+    }
+
+    i18next.on('languageChanged', () => {
+        updateContent();
+    });
 })
