@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>iZ³</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="assets/components/bootstrap/bootstrap.min.css">
@@ -21,8 +21,8 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/15.0.5/i18next.min.js"></script>
     <script src="assets/plugins/jquery-i18next/jquery-i18next.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/15.0.5/i18next.min.js"></script>
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -38,7 +38,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>iZ³</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>iZ³</b> Tokensale platform</span>
+            <span class="logo-lg" data-i18n="[html]page:logo.big"></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -57,7 +57,7 @@
                 <li class="header"></li>
                 <li class="active">
                     <a href="">
-                        <i class="fa fa-plus-circle"></i> <span data-i18n="common:menu.create">Create contract</span>
+                        <i class="fa fa-plus-circle"></i> <span data-i18n="eth_tkn_contract:menu.create"></span>
                         <span class="pull-right-container">
                         </span>
                     </a>
@@ -68,9 +68,7 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>
-                Create contract
-            </h1>
+            <h1 data-i18n="eth_tkn_contract:menu.create"></h1>
         </section>
 
         <section class="content">
@@ -78,23 +76,25 @@
                 <div class="col-md-7">
                     <div class="box box-success box-solid">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><i class="fab fa-ethereum"></i> Token contract <small style="color: white;">(Main Ethereum Network)</small></h3>
+                            <h3 class="box-title">
+                                <i class="fab fa-ethereum"></i>
+                                <span data-i18n="eth_tkn_contract:header.main"></span>
+                                <small style="color: white;" data-i18n="eth_tkn_contract:header.description"></small>
+                            </h3>
                         </div>
                         <form role="form">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-7">
-                                            <label for="tkn_name">Token name:</label>
-                                            <input type="text" class="form-control input-lg" id="tkn_name" placeholder="MyNewProjectToken">
+                                            <label for="tkn_name" data-i18n="eth_tkn_contract:fields.name.label"></label>
+                                            <input type="text" class="form-control input-lg" id="tkn_name" data-i18n="[placeholder]eth_tkn_contract:fields.name.placeholder">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
                                                 <label></label>
                                             </div>
-                                            <span class="help-block">
-                                                Enter name of the project without spaces, usually 5-25 symbols.
-                                                Lower and uppercase can be used
+                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.name.help">
                                             </span>
                                         </div>
                                     </div>
@@ -102,35 +102,28 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-7">
-                                            <label for="tkn_symbol">Token symbol:</label>
-                                            <input type="text" class="form-control input-lg" id="tkn_symbol" placeholder="NEW">
+                                            <label for="tkn_symbol" data-i18n="eth_tkn_contract:fields.symbol.label"></label>
+                                            <input type="text" class="form-control input-lg" id="tkn_symbol" data-i18n="[placeholder]eth_tkn_contract:fields.symbol.placeholder">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
                                                 <label></label>
                                             </div>
-                                            <span class="help-block">
-                                                Usually 3-4 Letters like ETH, BTC, NEO, WISH etc..
-                                                Please check that it’s unique before submission
-                                                <a href="https://etherscan.com/tokens">
-                                                (https://etherscan.com/tokens)
-                                                </a>
+                                            <span class="help-block" data-i18n="[html]eth_tkn_contract:fields.symbol.help">
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                         <div class="col-md-2">
-                                            <label for="tkn_decimals">Decimals:</label>
+                                            <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
                                             <input type="number" class="form-control input-lg" id="tkn_decimals" placeholder="18" min="0" max="50" step="1">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
                                                 <label></label>
                                             </div>
-                                            <span class="help-block">
-                                                Defines the number of decimals for the token.
-                                                0-50 numerals are accepted. 18 as common practice
+                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.decimals.help">
                                             </span>
                                         </div>
                                 </div>
@@ -145,8 +138,8 @@
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-        reserved.
+        <strong>Copyright &copy; 2019 <a href="//izzz.io">iZ³</a>.</strong>
+        <span data-i18n="page:copyrights"></span>
     </footer>
 </div>
 

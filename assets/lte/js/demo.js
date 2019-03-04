@@ -359,7 +359,6 @@ $(function () {
 
 
     i18next.init({
-
         tName: 't', // --> appends $.t = i18next.t
         i18nName: 'i18n', // --> appends $.i18n = i18next
         handleName: 'localize', // --> appends $(selector).localize(opts);
@@ -369,42 +368,71 @@ $(function () {
         useOptionsAttr: false, // see optionsAttr
         parseDefaultValueFromContent: true, // parses default values from content ele.val or ele.text
 
-        lng: 'en',
         debug: true,
+        lng: 'en',
         ns: {
-            namespaces: ['common', 'myModule'],
-            defaultNS: 'common'
+            namespaces: ['eth_tkn_contract', 'page'],
+            defaultNS: 'eth_tkn_contract'
         },
         resources: {
             en: {
-                common: {
-                    "menu": {
-                        "create": "CREATE"
+                page: {
+                    logo: {
+                        big: "<b>iZ³</b> Tokensale platform"
                     },
+                    copyrights: "All rights reserved."
                 },
-                myModule: {
-                    "key": "MODULE hello world"
+                eth_tkn_contract: {
+                    menu: {
+                        create: "Create contract"
+                    },
+                    header: {
+                        main: "Token contract",
+                        description: "(Main Ethereum Network)"
+                    },
+                    fields: {
+                        name: {
+                            label: "Token name:",
+                            placeholder: "MyNewProjectToken",
+                            help: "Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"
+                        },
+                        symbol: {
+                            label: "Token symbol:",
+                            placeholder: "NEW",
+                            help: "Usually 3-4 Letters like ETH, BTC, NEO, WISH etc.. Please check that it’s unique before submission <a href='https://etherscan.com/tokens'>(https://etherscan.com/tokens)</a>"
+                        },
+                        decimals: {
+                            label: "Decimals:",
+                            help: "Defines the number of decimals for the token. 0-50 numerals are accepted. 18 as common practice"
+                        }
+                    }
+                }
+            },
+            ru: {
+                eth_tkn_contract: {
+                    menu: {
+                        create: "Создать контракт"
+                    },
                 }
             }
         }
     }, (err, t) => {
-        // initialized and ready to go!
-        //const hw = i18next.t('key'); // hw = 'hello world'
+        jqueryI18next.init(i18next, $);
         updateContent();
+
+        $('.lang-select').click(function() {
+            i18next.changeLanguage(this.innerHTML);
+        });
+
+        i18next.on('languageChanged', () => {
+            updateContent();
+        });
     });
 
     function updateContent() {
-        const hw = i18next.t('common:menu.create');
-        alert(hw);
-
-        $(".sidebar").localize();
+        $('.main-header').localize();
+        $('.sidebar').localize();
+        $('.content-wrapper').localize();
+        $('.main-footer').localize();
     }
-
-    function changeLng(lng) {
-        i18next.changeLanguage(lng);
-    }
-
-    i18next.on('languageChanged', () => {
-        updateContent();
-    });
-})
+});
