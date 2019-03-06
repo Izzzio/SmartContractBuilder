@@ -18,6 +18,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+    <link rel="stylesheet" href="assets/plugins/icheck/skins/all.css">
+
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -82,13 +84,13 @@
                                 <small style="color: white;" data-i18n="eth_tkn_contract:header.description"></small>
                             </h3>
                         </div>
-                        <form role="form">
+                        <form role="form" id="step_1">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-7">
                                             <label for="tkn_name" data-i18n="eth_tkn_contract:fields.name.label"></label>
-                                            <input type="text" class="form-control input-lg" id="tkn_name" data-i18n="[placeholder]eth_tkn_contract:fields.name.placeholder">
+                                            <input type="text" class="form-control input-lg" id="tkn_name" name="tkn_name" data-i18n="[placeholder]eth_tkn_contract:fields.name.placeholder">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
@@ -103,7 +105,7 @@
                                     <div class="form-group">
                                         <div class="col-md-7">
                                             <label for="tkn_symbol" data-i18n="eth_tkn_contract:fields.symbol.label"></label>
-                                            <input type="text" class="form-control input-lg" id="tkn_symbol" data-i18n="[placeholder]eth_tkn_contract:fields.symbol.placeholder">
+                                            <input type="text" class="form-control input-lg" id="tkn_symbol" name="tkn_symbol" data-i18n="[placeholder]eth_tkn_contract:fields.symbol.placeholder">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
@@ -117,7 +119,7 @@
                                 <div class="row form-group">
                                         <div class="col-md-2">
                                             <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
-                                            <input type="number" class="form-control input-lg" id="tkn_decimals" placeholder="18" min="0" max="50" step="1">
+                                            <input type="number" class="form-control input-lg" id="tkn_decimals" name="tkn_decimals" placeholder="18" min="0" max="50" step="1">
                                         </div>
                                         <div class="col-md-5">
                                             <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
@@ -126,6 +128,60 @@
                                             <span class="help-block" data-i18n="eth_tkn_contract:fields.decimals.help">
                                             </span>
                                         </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <form role="form" id="step_2">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label data-i18n="eth_tkn_contract:fields.tkn_type.label"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="tkn_type_1" name="tkn_type" value="20" class="flat-blue" checked="">
+                                                    <strong data-i18n="eth_tkn_contract:fields.type_1.label"></strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="radio">
+                                                <span class="help-block" data-i18n="eth_tkn_contract:fields.type_1.help">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="tkn_type_2" name="tkn_type" value="223" class="flat-blue">
+                                                    <strong data-i18n="eth_tkn_contract:fields.type_2.label"></strong>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="radio">
+                                                <span class="help-block" data-i18n="[html]eth_tkn_contract:fields.type_2.help">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -144,7 +200,10 @@
 </div>
 
 <!-- jQuery 3 -->
+<!--
 <script src="assets/components/jquery/jquery.min.js"></script>
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="assets/components/bootstrap/bootstrap.min.js"></script>
 <!-- FastClick -->
 <script src="assets/components/fastclick/fastclick.js"></script>
@@ -154,5 +213,8 @@
 <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="assets/lte/js/demo.js"></script>
+<script src="assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="assets/plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="assets/plugins/icheck/icheck.min.js"></script>
 </body>
 </html>
