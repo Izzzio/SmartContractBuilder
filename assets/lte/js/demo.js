@@ -20,13 +20,16 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 
 
-    //Flat red color scheme for iCheck
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
-        radioClass   : 'iradio_flat-blue'
+        radioClass: 'iradio_flat-blue',
+        increaseArea: '20%' // optional
     });
 
-
+    $('.chkx-toogle-main').bootstrapToggle({
+        on: 'YES',
+        off: 'NO'
+    });
 
 
 
@@ -87,7 +90,25 @@ $(function () {
                         type_2: {
                             label: "ERC-223",
                             help: "ERC-223 is almost the same as ERC-20. Provides extra safety during token transfers."
-                        }
+                        },
+                        owner: {
+                            label: "Token Owner:",
+                            placeholder: "0xD0593B233Be4411A236F22b42087345E1137170b",
+                            help: "ETH address (not exchange address). This address will be owner of the token (after sale end date). Double check the address (and access to it) before submission"
+                        },
+                        mint: {
+                            label: "<i class='fas fa-plus-circle'></i>&nbsp;&nbsp;Mint tokens",
+                            help: "You can reserve the tokens for Team, Bonuses, Bounties - these tokens will be created, but can’t be sold until token sale completion."
+                        },
+                        future_minting: {
+                            label: "<i class='far fa-stop-circle text-primary'></i>&nbsp;&nbsp;Future Minting",
+                            help: "Yes - you can create more tokens in the future & use token for Crowdsale.<br />No - no more tokens will be created in the future. Crowdsale is impossible."
+                        },
+
+
+
+
+
                     }
                 }
             },

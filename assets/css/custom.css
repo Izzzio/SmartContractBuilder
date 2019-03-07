@@ -6,6 +6,9 @@
     .help-block{
         height: 70px;
     }
+    .help-mini{
+        height: auto;
+    }
 }
 
 .error {

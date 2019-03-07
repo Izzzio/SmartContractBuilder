@@ -18,11 +18,13 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <link rel="stylesheet" href="assets/plugins/icheck/skins/all.css">
-
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <link rel="stylesheet" href="assets/plugins/icheck/skins/flat/blue.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-toggle/css/bootstrap-toggle.min.css">
+
     <script src="assets/plugins/jquery-i18next/jquery-i18next.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/15.0.5/i18next.min.js"></script>
 
@@ -151,7 +153,7 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <div class="radio">
-                                                <label>
+                                                <label style="padding-left: 0px;">
                                                     <input type="radio" id="tkn_type_1" name="tkn_type" value="20" class="flat-blue" checked="">
                                                     <strong data-i18n="eth_tkn_contract:fields.type_1.label"></strong>
                                                 </label>
@@ -159,7 +161,7 @@
                                         </div>
                                         <div class="col-md-9">
                                             <div class="radio">
-                                                <span class="help-block" data-i18n="eth_tkn_contract:fields.type_1.help">
+                                                <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.type_1.help">
                                                 </span>
                                             </div>
                                         </div>
@@ -169,7 +171,7 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <div class="radio">
-                                                <label>
+                                                <label style="padding-left: 0px;">
                                                     <input type="radio" id="tkn_type_2" name="tkn_type" value="223" class="flat-blue">
                                                     <strong data-i18n="eth_tkn_contract:fields.type_2.label"></strong>
                                                 </label>
@@ -177,11 +179,93 @@
                                         </div>
                                         <div class="col-md-9">
                                             <div class="radio">
-                                                <span class="help-block" data-i18n="[html]eth_tkn_contract:fields.type_2.help">
+                                                <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.type_2.help">
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <form role="form" id="step_3">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <label for="tkn_owner" data-i18n="eth_tkn_contract:fields.owner.label"></label>
+                                            <input type="text" class="form-control input-lg" id="tkn_owner" name="tkn_owner" data-i18n="[placeholder]eth_tkn_contract:fields.owner.placeholder">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
+                                                <label></label>
+                                            </div>
+                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.owner.help">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <form role="form" id="step_4">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <button type="button" data-i18n="[html]eth_tkn_contract:fields.mint.label" class="btn btn-lg btn-primary"></button>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.mint.help">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <form role="form" id="step_5">
+                            <div class="box-body">
+                                <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-6">
+                                            <label data-i18n="[html]eth_tkn_contract:fields.future_minting.label"></label>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-3">
+                                            <div class="checkbox disabled">
+                                                <label>
+                                                    <input type="checkbox" disabled checked data-toggle="toggle" class="chkx-toogle-main">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.future_minting.help">
+                                            </span>
+                                        </div>
                                 </div>
                             </div>
                         </form>
@@ -200,10 +284,7 @@
 </div>
 
 <!-- jQuery 3 -->
-<!--
 <script src="assets/components/jquery/jquery.min.js"></script>
--->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="assets/components/bootstrap/bootstrap.min.js"></script>
 <!-- FastClick -->
 <script src="assets/components/fastclick/fastclick.js"></script>
@@ -216,5 +297,6 @@
 <script src="assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="assets/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="assets/plugins/icheck/icheck.min.js"></script>
+<script src="assets/plugins/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 </body>
 </html>
