@@ -104,6 +104,10 @@ $(function () {
                             label: "<i class='far fa-stop-circle text-primary'></i>&nbsp;&nbsp;Future Minting",
                             help: "Yes - you can create more tokens in the future & use token for Crowdsale.<br />No - no more tokens will be created in the future. Crowdsale is impossible."
                         },
+                        report: {
+                            label: "<i class='fas fa-file-alt text-primary'></i>&nbsp;&nbsp;Branded Report",
+                            help: "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=''>check the example</a>. Branded report cost is 3 ETH."
+                        },
 
 
 

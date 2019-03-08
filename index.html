@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
                                             <input type="number" class="form-control input-lg" id="tkn_decimals" name="tkn_decimals" placeholder="18" min="0" max="50" step="1">
                                         </div>
@@ -230,12 +230,14 @@
                         <form role="form" id="step_4">
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-5 vcenter">
                                         <button type="button" data-i18n="[html]eth_tkn_contract:fields.mint.label" class="btn btn-lg btn-primary"></button>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-6 vcenter">
                                         <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.mint.help">
                                         </span>
+                                    </div>
+                                    <div class="col-md-1">
                                     </div>
                                 </div>
                             </div>
@@ -252,20 +254,53 @@
                         <form role="form" id="step_5">
                             <div class="box-body">
                                 <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                            <label data-i18n="[html]eth_tkn_contract:fields.future_minting.label"></label>
+                                    <div class="col-md-3 col-sm-3 col-xs-7 vcenter">
+                                        <label data-i18n="[html]eth_tkn_contract:fields.future_minting.label"></label>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
+                                        <div class="checkbox disabled">
+                                            <label>
+                                                <input type="checkbox" disabled checked data-toggle="toggle" class="chkx-toogle-main">
+                                            </label>
                                         </div>
-                                        <div class="col-md-2 col-sm-2 col-xs-3">
-                                            <div class="checkbox disabled">
-                                                <label>
-                                                    <input type="checkbox" disabled checked data-toggle="toggle" class="chkx-toogle-main">
-                                                </label>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-7 col-xs-12 vcenter">
+                                        <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.future_minting.help">
+                                        </span>
+                                    </div>
+                                    <div class="col-md-1 col-sm-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="box box-success box-solid">
+                        <form role="form" id="step_6">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-7 vcenter">
+                                        <label data-i18n="[html]eth_tkn_contract:fields.report.label"></label>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
+                                        <div class="checkbox disabled">
+                                            <label>
+                                                <input type="checkbox" disabled checked data-toggle="toggle" class="chkx-toogle-main">
+                                            </label>
                                         </div>
-                                        <div class="col-md-7 col-sm-7 col-xs-12">
-                                            <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.future_minting.help">
-                                            </span>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-7 col-xs-12 vcenter">
+                                        <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.report.help">
+                                        </span>
+                                    </div>
+                                    <div class="col-md-1 col-sm-7 col-xs-12">
+                                    </div>
                                 </div>
                             </div>
                         </form>
