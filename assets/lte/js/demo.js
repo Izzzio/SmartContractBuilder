@@ -108,11 +108,10 @@ $(function () {
                             label: "<i class='fas fa-file-alt text-primary'></i>&nbsp;&nbsp;Branded Report",
                             help: "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=''>check the example</a>. Branded report cost is 3 ETH."
                         },
-
-
-
-
-
+                    },
+                    button: {
+                        create: "Create",
+                        clean: "<i class='far fa-times-circle'></i>&nbsp;&nbsp;Clean"
                     }
                 }
             },
