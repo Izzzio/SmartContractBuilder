@@ -23,7 +23,7 @@ $(function () {
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
         radioClass: 'iradio_flat-blue',
-        increaseArea: '20%' // optional
+        increaseArea: '20%'
     });
 
     $('.chkx-toogle-main').bootstrapToggle({
@@ -162,9 +162,31 @@ $(function () {
         highlight: function(element) {
             $(element).addClass('error');
         }
-    //}).form(); //rules auto enable
+    });
+    $("#step_3").validate({
+        rules: {
+            tkn_owner: {
+                required: true
+            }
+        },
+        errorPlacement: function(){
+            return false;
+        },
+        highlight: function(element) {
+            $(element).addClass('error');
+        }
     });
     $('input').on('click', function () {
         $('input[name="'+$(this).attr('name')+'"]').valid();
+
+        /*
+        if($("#step_1").valid()){   // test for validity
+            // do stuff if form is valid
+            console.log('OK');
+        } else {
+            // do stuff if form is not valid
+            console.log('NO');
+        }
+        */
     });
 });
