@@ -176,17 +176,23 @@ $(function () {
             $(element).addClass('error');
         }
     });
-    $('input').on('click', function () {
-        $('input[name="'+$(this).attr('name')+'"]').valid();
 
-        /*
-        if($("#step_1").valid()){   // test for validity
-            // do stuff if form is valid
-            console.log('OK');
-        } else {
-            // do stuff if form is not valid
-            console.log('NO');
+    var fieldsBlock_1 = {};
+    $('#step_1').on('change click keyup', 'input', function () {
+        let element = $(this).attr('name');
+        let isFieldValid = $('input[name="'+element+'"]').valid();
+        if(!fieldsBlock_1[element]){
+            fieldsBlock_1[element] = 0;
         }
-        */
+        fieldsBlock_1[element] = isFieldValid ? 1 : 0;
+
+        let nextBlock = true;
+        for (var prop in fieldsBlock_1) {
+            if(0 === fieldsBlock_1[prop]){
+                nextBlock = false;
+                break;
+            }
+        }
+        nextBlock ? $('#test').hide() : $('#test').show();
     });
 });
