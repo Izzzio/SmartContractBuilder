@@ -15,9 +15,7 @@ $(function () {
         $pushMenu = $('[data-toggle="push-menu"]').data('lte.pushmenu')
         $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
         $layout = $('body').data('lte.layout')
-    })
-
-    $('[data-toggle="tooltip"]').tooltip()
+    });
 
 
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
@@ -80,9 +78,6 @@ $(function () {
                             label: "Decimals:",
                             help: "Defines the number of decimals for the token. 0-50 numerals are accepted. 18 as common practice"
                         },
-                        tkn_type: {
-                            label: "Choose Type of Token",
-                        },
                         type_1: {
                             label: "ERC-20",
                             help: "ERC-20 is recommended option. Accepted by the most exchanges."
@@ -100,6 +95,10 @@ $(function () {
                             label: "<i class='fas fa-plus-circle'></i>&nbsp;&nbsp;Mint tokens",
                             help: "You can reserve the tokens for Team, Bonuses, Bounties - these tokens will be created, but can’t be sold until token sale completion."
                         },
+                        mint_new: {
+                            label: "<i class='fas fa-plus-circle'></i>&nbsp;&nbsp;Mint tokens",
+                            help: "You can reserve the tokens for Team, Bonuses, Bounties - these tokens will be created, but can’t be sold until token sale completion."
+                        },
                         future_minting: {
                             label: "<i class='far fa-stop-circle text-primary'></i>&nbsp;&nbsp;Future Minting",
                             help: "Yes - you can create more tokens in the future & use token for Crowdsale.<br />No - no more tokens will be created in the future. Crowdsale is impossible."
@@ -108,6 +107,23 @@ $(function () {
                             label: "<i class='fas fa-file-alt text-primary'></i>&nbsp;&nbsp;Branded Report",
                             help: "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=''>check the example</a>. Branded report cost is 3 ETH."
                         },
+                    },
+                    blocks: {
+                        mint_new: {
+                            address: {
+                                label: "Address",
+                                placeholder: "Enter the address of the recipient's wallet"
+                            },
+                            name: {
+                                label: "Name"
+                            }
+                        },
+                    },
+                    tkn_type: {
+                        label: "Choose Type of Token",
+                    },
+                    mint_new: {
+                        label: "Define address for tokens (after minting it will be sent to this address)"
                     },
                     button: {
                         create: "Create",
@@ -177,22 +193,78 @@ $(function () {
         }
     });
 
-    var fieldsBlock_1 = {};
+    let blocksFilled = [];
+    blocksFilled[1] = false;
+    blocksFilled[3] = false;
+
+    var block_1_fields = {};
     $('#step_1').on('change click keyup', 'input', function () {
+        blocksFilled[1] = false;
         let element = $(this).attr('name');
         let isFieldValid = $('input[name="'+element+'"]').valid();
-        if(!fieldsBlock_1[element]){
-            fieldsBlock_1[element] = 0;
+        if(!block_1_fields[element]){
+            block_1_fields[element] = 0;
         }
-        fieldsBlock_1[element] = isFieldValid ? 1 : 0;
+        block_1_fields[element] = isFieldValid ? 1 : 0;
 
-        let nextBlock = true;
-        for (var prop in fieldsBlock_1) {
-            if(0 === fieldsBlock_1[prop]){
-                nextBlock = false;
-                break;
+        const propOwn = Object.getOwnPropertyNames(block_1_fields);
+
+        if(3 === propOwn.length){
+            try {
+                for (var prop in block_1_fields) {
+                    if(0 === block_1_fields[prop]){
+                        throw new Error();
+                    }
+                }
+                blocksFilled[1] = true;
+            } catch (e) {
             }
         }
-        nextBlock ? $('#test').hide() : $('#test').show();
+        updateBlocksAvailability();
     });
+
+    var block_3_fields = {};
+    $('#step_3').on('change click keyup', 'input', function () {
+        let element = $(this).attr('name');
+        let isFieldValid = $('input[name="'+element+'"]').valid();
+        if(!block_3_fields[element]){
+            block_3_fields[element] = 0;
+        }
+        block_3_fields[element] = isFieldValid ? 1 : 0;
+        blocksFilled[3] = !!block_3_fields[element];
+        updateBlocksAvailability();
+    });
+
+    function updateBlocksAvailability() {
+        if(blocksFilled[1]){
+            setBlocksAvailable('step_3')
+        } else {
+            setBlocksUnavailable('step_3');
+            setBlocksUnavailable('step_4');
+            setBlocksUnavailable('step_5');
+            setBlocksUnavailable('step_6');
+        }
+        if(blocksFilled[1] && blocksFilled[3]){
+            setBlocksAvailable('step_4');
+            setBlocksAvailable('step_5');
+            setBlocksAvailable('step_6');
+            $('#save').removeClass('disabled');
+        } else {
+            setBlocksUnavailable('step_4');
+            setBlocksUnavailable('step_5');
+            setBlocksUnavailable('step_6');
+            $('#save').addClass('disabled');
+        }
+    }
+
+    function setBlocksAvailable(formId) {
+        $('#'+formId).parent().find('div.overlay').hide();
+    }
+    function setBlocksUnavailable(formId) {
+        $('#'+formId).parent().find('div.overlay').show();
+    }
+
+    $('#mint_new').on('click', function (e) {
+        let tpl = $('#mint_new_tpl').html();
+    })
 });

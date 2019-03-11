@@ -146,7 +146,7 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <label data-i18n="eth_tkn_contract:fields.tkn_type.label"></label>
+                                        <label data-i18n="eth_tkn_contract:tkn_type.label"></label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -214,11 +214,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    &nbsp;
                                 </div>
                             </div>
                         </form>
-                        <div class="overlay" id="test"></div>
+                        <div class="overlay"></div>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -227,12 +226,41 @@
 
             <div class="row">
                 <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
+
+
+                    <div class="box box-default box-solid" style="margin-bottom: 0px;">
+                        <form role="form" id="%%MINT_NEW_ID%%">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label data-i18n="eth_tkn_contract:mint_new.label"></label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <label for="mint_new_address" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
+                                            <input type="text" class="form-control input-lg" id="mint_new_address" name="mint_new_address" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="mint_new_name" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
+                                            <input type="text" class="form-control input-lg" id="mint_new_name" name="mint_new_name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="overlay"></div>
+                    </div>
+
+
                     <div class="box box-default box-solid">
                         <form role="form" id="step_4">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-5 vcenter">
-                                        <button type="button" data-i18n="[html]eth_tkn_contract:fields.mint.label" class="btn btn-lg btn-primary"></button>
+                                        <button type="button" data-i18n="[html]eth_tkn_contract:fields.mint.label" class="btn btn-lg btn-primary" id="mint_new"></button>
                                     </div>
                                     <div class="col-md-6 vcenter">
                                         <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.mint.help">
@@ -316,7 +344,7 @@
 
             <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled"></button>
+                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="save"></button>
                     <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" style="margin-left: 20px;"></button>
                 </div>
             </div>
