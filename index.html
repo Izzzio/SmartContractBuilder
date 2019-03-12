@@ -28,6 +28,8 @@
     <script src="assets/plugins/jquery-i18next/jquery-i18next.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/15.0.5/i18next.min.js"></script>
 
+    <link rel="stylesheet" href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -257,15 +259,20 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
-                                            <input type="text" class="form-control input-lg" id="mint_new_frozen" name="mint_new_frozen">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <input type="checkbox" data-toggle="toggle" class="chkx-toogle-main">
+                                                </span>
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new_frozen" readonly disabled style="width: 85%; margin-left: 15%;">
+                                                    <span class="input-group-addon"><i class="far fa-calendar-alt fa-lg text-primary"></i></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <!--
-                        <div class="overlay"></div>
-                        -->
                     </div>
 
 
@@ -386,5 +393,7 @@
 <script src="assets/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="assets/plugins/icheck/icheck.min.js"></script>
 <script src="assets/plugins/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
 </body>
 </html>

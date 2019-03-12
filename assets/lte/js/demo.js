@@ -29,6 +29,13 @@ $(function () {
         off: 'NO'
     });
 
+    $('.datepicker').datepicker({
+        format: "dd.mm.yyyy",
+        language: "ru",
+        autoclose: true,
+        todayHighlight: true,
+        orientation: "top auto",
+    });
 
 
     i18next.init({
