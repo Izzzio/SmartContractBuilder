@@ -112,10 +112,16 @@ $(function () {
                         mint_new: {
                             address: {
                                 label: "Address",
-                                placeholder: "Enter the address of the recipient's wallet"
+                                placeholder: "Enter address of the recipient's wallet"
                             },
                             name: {
                                 label: "Name"
+                            },
+                            amount: {
+                                label: "Token amount"
+                            },
+                            frozen: {
+                                label: "<i class='far fa-snowflake text-primary'></i>&nbsp;&nbsp;Frozen until date (UTC+3)"
                             }
                         },
                     },
