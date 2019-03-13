@@ -228,45 +228,39 @@
 
             <div class="row">
                 <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-
-
                     <div class="box box-default box-solid" style="margin-bottom: 0px;">
-                        <form role="form" id="%%MINT_NEW_ID%%">
+                        <form role="form" id="%%MINT_NEW_FORM_ID%%">
                             <div class="box-body">
+                                <i class="fas fa-lg fa-times-circle text-primary" style="float: right"></i>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label data-i18n="eth_tkn_contract:mint_new.label"></label>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <label for="mint_new_address" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
-                                            <input type="text" class="form-control input-lg" id="mint_new_address" name="mint_new_address" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="mint_new_name" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
-                                            <input type="text" class="form-control input-lg" id="mint_new_name" name="mint_new_name">
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-8 m-top-15">
+                                        <label for="mint_new_address" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
+                                        <input type="text" class="form-control input-lg" id="mint_new_address" name="mint_new[%%FRM-NUM%%][address]" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
+                                    </div>
+                                    <div class="col-md-4 m-top-15">
+                                        <label for="mint_new_name" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
+                                        <input type="text" class="form-control input-lg" id="mint_new_name" name="mint_new[%%FRM-NUM%%][name]">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="mint_new_amount" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                                            <input type="text" class="form-control input-lg" id="mint_new_amount" name="mint_new_amount ">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
+                                <div class="row">
+                                    <div class="col-md-6 m-top-15">
+                                        <label for="mint_new_amount" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
+                                        <input type="text" class="form-control input-lg" id="mint_new_amount" name="mint_new[%%FRM-NUM%%][amount]">
+                                    </div>
+                                    <div class="col-md-6 m-top-15">
+                                        <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <input type="checkbox" data-toggle="toggle" class="chkx-toogle-main" id="mint_new_frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]">
+                                            </span>
                                             <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <input type="checkbox" data-toggle="toggle" class="chkx-toogle-main">
-                                                </span>
-                                                <div class="input-group date">
-                                                    <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new_frozen" readonly disabled style="width: 85%; margin-left: 15%;">
-                                                    <span class="input-group-addon"><i class="far fa-calendar-alt fa-lg text-primary"></i></span>
-                                                </div>
+                                                <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" readonly disabled style="width: 85%; margin-left: 15%;">
+                                                <span class="input-group-addon"><i class="far fa-calendar-alt fa-lg text-primary"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +268,6 @@
                             </div>
                         </form>
                     </div>
-
 
                     <div class="box box-default box-solid">
                         <form role="form" id="step_4">

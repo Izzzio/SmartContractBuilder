@@ -7,6 +7,14 @@ label {
     border: 1px solid #f00 !important;
 }
 
+.m-top-15 {
+    margin-top: 15px;
+}
+
+.fa-times-circle {
+    cursor: pointer;
+}
+
 @media (min-width: 992px) {
     .help-block {
         /*

@@ -23,10 +23,16 @@ $(function () {
         radioClass: 'iradio_flat-blue',
         increaseArea: '20%'
     });
-
     $('.chkx-toogle-main').bootstrapToggle({
         on: 'YES',
         off: 'NO'
+    });
+    $('#mint_new_frozen_use').on('change', function(){
+        if($(this).prop('checked')){
+            $('#mint_new_frozen').removeAttr('disabled');
+        } else {
+            $('#mint_new_frozen').prop('disabled', true);
+        }
     });
 
     $('.datepicker').datepicker({
@@ -278,6 +284,6 @@ $(function () {
     }
 
     $('#mint_new').on('click', function (e) {
-        let tpl = $('#mint_new_tpl').html();
-    })
+        let block = $('#mint_new_tpl').html();
+    });
 });
