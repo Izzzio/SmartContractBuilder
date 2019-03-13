@@ -1,22 +1,5 @@
 $(function () {
-    'use strict'
-
-    /**
-     * Get access to plugins
-     */
-
-    $('[data-toggle="control-sidebar"]').controlSidebar()
-    $('[data-toggle="push-menu"]').pushMenu()
-    var $pushMenu = $('[data-toggle="push-menu"]').data('lte.pushmenu')
-    var $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
-    var $layout = $('body').data('lte.layout')
-    $(window).on('load', function() {
-        // Reinitialize variables on load
-        $pushMenu = $('[data-toggle="push-menu"]').data('lte.pushmenu')
-        $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
-        $layout = $('body').data('lte.layout')
-    });
-
+    'use strict';
 
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
@@ -285,5 +268,8 @@ $(function () {
 
     $('#mint_new').on('click', function (e) {
         let block = $('#mint_new_tpl').html();
+        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "111");
+        block = block.replace(/%%FRM-NUM%%/g, "1");
+        $(block).insertBefore( "#mint_new_main" );
     });
 });
