@@ -10,8 +10,8 @@ $(function () {
         on: 'YES',
         off: 'NO'
     });
-    $('#mint_new_frozen_use').on('change', function(){
-        if($(this).prop('checked')){
+    $('#mint_new_wrapper').on('change', '#mint_new_frozen_use', function () {
+        if ($(this).prop('checked')) {
             $('#mint_new_frozen').removeAttr('disabled');
         } else {
             $('#mint_new_frozen').prop('disabled', true);
@@ -145,7 +145,7 @@ $(function () {
         jqueryI18next.init(i18next, $);
         updateContent();
 
-        $('.lang-select').click(function() {
+        $('.lang-select').click(function () {
             i18next.changeLanguage(this.innerHTML);
         });
 
@@ -159,8 +159,8 @@ $(function () {
         $('.sidebar').localize();
         $('.content-wrapper').localize();
         $('.main-footer').localize();
+        $('#mint_new_tpl').localize();
     }
-
 
     $("#step_1").validate({
         rules: {
@@ -174,10 +174,10 @@ $(function () {
                 required: true
             }
         },
-        errorPlacement: function(){
+        errorPlacement: function () {
             return false;
         },
-        highlight: function(element) {
+        highlight: function (element) {
             $(element).addClass('error');
         }
     });
@@ -187,10 +187,10 @@ $(function () {
                 required: true
             }
         },
-        errorPlacement: function(){
+        errorPlacement: function () {
             return false;
         },
-        highlight: function(element) {
+        highlight: function (element) {
             $(element).addClass('error');
         }
     });
@@ -203,18 +203,18 @@ $(function () {
     $('#step_1').on('change click keyup', 'input', function () {
         blocksFilled[1] = false;
         let element = $(this).attr('name');
-        let isFieldValid = $('input[name="'+element+'"]').valid();
-        if(!block_1_fields[element]){
+        let isFieldValid = $('input[name="' + element + '"]').valid();
+        if (!block_1_fields[element]) {
             block_1_fields[element] = 0;
         }
         block_1_fields[element] = isFieldValid ? 1 : 0;
 
         const propOwn = Object.getOwnPropertyNames(block_1_fields);
 
-        if(3 === propOwn.length){
+        if (3 === propOwn.length) {
             try {
                 for (var prop in block_1_fields) {
-                    if(0 === block_1_fields[prop]){
+                    if (0 === block_1_fields[prop]) {
                         throw new Error();
                     }
                 }
@@ -228,8 +228,8 @@ $(function () {
     var block_3_fields = {};
     $('#step_3').on('change click keyup', 'input', function () {
         let element = $(this).attr('name');
-        let isFieldValid = $('input[name="'+element+'"]').valid();
-        if(!block_3_fields[element]){
+        let isFieldValid = $('input[name="' + element + '"]').valid();
+        if (!block_3_fields[element]) {
             block_3_fields[element] = 0;
         }
         block_3_fields[element] = isFieldValid ? 1 : 0;
@@ -238,7 +238,7 @@ $(function () {
     });
 
     function updateBlocksAvailability() {
-        if(blocksFilled[1]){
+        if (blocksFilled[1]) {
             setBlocksAvailable('step_3')
         } else {
             setBlocksUnavailable('step_3');
@@ -246,7 +246,7 @@ $(function () {
             setBlocksUnavailable('step_5');
             setBlocksUnavailable('step_6');
         }
-        if(blocksFilled[1] && blocksFilled[3]){
+        if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
             setBlocksAvailable('step_6');
@@ -260,16 +260,25 @@ $(function () {
     }
 
     function setBlocksAvailable(formId) {
-        $('#'+formId).parent().find('div.overlay').hide();
-    }
-    function setBlocksUnavailable(formId) {
-        $('#'+formId).parent().find('div.overlay').show();
+        $('#' + formId).parent().find('div.overlay').hide();
     }
 
+    function setBlocksUnavailable(formId) {
+        $('#' + formId).parent().find('div.overlay').show();
+    }
+
+    var mintNewItem = 0;
     $('#mint_new').on('click', function (e) {
+        mintNewItem++;
         let block = $('#mint_new_tpl').html();
-        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "111");
-        block = block.replace(/%%FRM-NUM%%/g, "1");
-        $(block).insertBefore( "#mint_new_main" );
+        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "mint_new_"+mintNewItem);
+        block = block.replace(/%%FRM-NUM%%/g, mintNewItem);
+        $(block).insertBefore("#mint_new_main");
     });
+
+    $('#mint_new_wrapper').on('click', '.mint-new-cancel', function (e) {
+        let target = $(this).data('target');
+        $('[data-id=' + target + ']', $('#mint_new_wrapper')).remove();
+    });
+
 });
