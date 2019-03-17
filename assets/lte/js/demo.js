@@ -261,7 +261,8 @@ $(function () {
     $('#mint_new').on('click', function (e) {
         mintNewItem++;
         let block = $('#mint_new_tpl').html();
-        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "mint_new_" + mintNewItem);
+        let formId = "mint_new_" + mintNewItem;
+        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, formId);
         block = block.replace(/%%FRM-NUM%%/g, mintNewItem);
         block = block.replace(/UTC/g, "UTC" + offsetHours);
 
@@ -281,25 +282,28 @@ $(function () {
                 }
             });
 
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        today = dd + '.' + mm + '.' + yyyy;
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0');
+        let yyyy = today.getFullYear();
+        let todayFormatted = dd + '.' + mm + '.' + yyyy;
 
         block.find('.datepicker')
-            .val(today)
+            .val(todayFormatted)
             .datepicker({
                 format: "dd.mm.yyyy",
-                startDate: today,
+                startDate: todayFormatted,
                 language: "ru",
                 autoclose: true,
                 todayHighlight: true,
                 orientation: "top auto"
             });
 
-        block.validate({
+        block.find("#"+formId).validate({
             rules: {
                 "mint_new[1][address]": {
+                    required: true
+                },
+                "mint_new[1][amount]": {
                     required: true
                 }
             },
@@ -310,14 +314,9 @@ $(function () {
                 $(element).addClass('error');
             }
         });
-        block.on('change click keyup', '.need-validate', function () {
+        block.find("#"+formId).on('change click keyup', '.need-validate', function () {
             let element = $(this).attr('name');
             let isFieldValid = $('input[name="' + element + '"]', block).valid();
-
-
-            console.log(isFieldValid);
-
-
         });
 
         block.insertBefore("#mint_new_main");
