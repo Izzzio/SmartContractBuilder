@@ -102,7 +102,7 @@ $(function () {
                                 label: "Token amount"
                             },
                             frozen: {
-                                label: "<i class='far fa-snowflake text-primary'></i>&nbsp;&nbsp;Frozen until date (UTC+3)"
+                                label: "<i class='far fa-snowflake text-primary'></i>&nbsp;&nbsp;Frozen until date (UTC)"
                             }
                         },
                     },
@@ -252,12 +252,18 @@ $(function () {
         $('#' + formId).parent().find('div.overlay').show();
     }
 
+
+    var today = new Date();
+    var offsetHours = -today.getTimezoneOffset() / 60;
+    offsetHours = (offsetHours >= 0 ? '+' + offsetHours : offsetHours);
+
     var mintNewItem = 0;
     $('#mint_new').on('click', function (e) {
         mintNewItem++;
         let block = $('#mint_new_tpl').html();
-        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "mint_new_"+mintNewItem);
+        block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "mint_new_" + mintNewItem);
         block = block.replace(/%%FRM-NUM%%/g, mintNewItem);
+        block = block.replace(/UTC/g, "UTC" + offsetHours);
 
         block = $(block);
         block.find('.frozen_use')
@@ -265,25 +271,31 @@ $(function () {
                 on: 'YES',
                 off: 'NO'
             })
-            .change(function() {
+            .change(function () {
                 let $this = $(this);
                 let formId = $this.data('form');
                 if ($this.prop('checked')) {
-                    $('[name="mint_new['+formId+'][frozen]"]', block).removeAttr('disabled');
+                    $('[name="mint_new[' + formId + '][frozen]"]', block).removeAttr('disabled');
                 } else {
-                    $('[name="mint_new['+formId+'][frozen]"]', block).prop('disabled', true);
+                    $('[name="mint_new[' + formId + '][frozen]"]', block).prop('disabled', true);
                 }
             });
+
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = dd + '.' + mm + '.' + yyyy;
+
         block.find('.datepicker')
-            .val(new Date())
+            .val(today)
             .datepicker({
                 format: "dd.mm.yyyy",
-                startDate: new Date(),
+                startDate: today,
                 language: "ru",
                 autoclose: true,
                 todayHighlight: true,
                 orientation: "top auto"
-        });
+            });
 
         block.validate({
             rules: {
@@ -302,7 +314,9 @@ $(function () {
             let element = $(this).attr('name');
             let isFieldValid = $('input[name="' + element + '"]', block).valid();
 
+
             console.log(isFieldValid);
+
 
         });
 
