@@ -275,13 +275,37 @@ $(function () {
                 }
             });
         block.find('.datepicker')
+            .val(new Date())
             .datepicker({
                 format: "dd.mm.yyyy",
+                startDate: new Date(),
                 language: "ru",
                 autoclose: true,
                 todayHighlight: true,
-                orientation: "top auto",
+                orientation: "top auto"
         });
+
+        block.validate({
+            rules: {
+                "mint_new[1][address]": {
+                    required: true
+                }
+            },
+            errorPlacement: function () {
+                return false;
+            },
+            highlight: function (element) {
+                $(element).addClass('error');
+            }
+        });
+        block.on('change click keyup', '.need-validate', function () {
+            let element = $(this).attr('name');
+            let isFieldValid = $('input[name="' + element + '"]', block).valid();
+
+            console.log(isFieldValid);
+
+        });
+
         block.insertBefore("#mint_new_main");
     });
 
