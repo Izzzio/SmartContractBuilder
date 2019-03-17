@@ -263,7 +263,7 @@
                                     <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
                                         <div class="checkbox disabled">
                                             <label>
-                                                <input type="checkbox" disabled checked data-toggle="toggle" class="chkx-toogle-main">
+                                                <input type="checkbox" disabled="disabled" checked="checked" class="chkx-toogle-main">
                                             </label>
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@
                                     <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" data-toggle="toggle" class="chkx-toogle-main">
+                                                <input type="checkbox" class="chkx-toogle-main">
                                             </label>
                                         </div>
                                     </div>
@@ -334,7 +334,7 @@
     <div class="box box-default box-solid" data-id="%%MINT_NEW_FORM_ID%%" style="margin-bottom: 0px;">
         <form role="form" id="%%MINT_NEW_FORM_ID%%">
             <div class="box-body">
-                <i class="fas fa-lg fa-times-circle text-primary mint-new-cancel" data-target="%%MINT_NEW_FORM_ID%%" style="float: right"></i>
+                <i class="fas fa-lg fa-times-circle text-primary mint-new-cancel" data-wrapper="%%MINT_NEW_FORM_ID%%" style="float: right"></i>
                 <div class="row">
                     <div class="col-md-12">
                         <label data-i18n="eth_tkn_contract:mint_new.label"></label>
@@ -359,7 +359,7 @@
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <input type="checkbox" data-toggle="toggle" class="chkx-toogle-main" id="mint_new_frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]">
+                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%">
                             </span>
                             <div class="input-group">
                                 <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" readonly disabled style="width: 85%; margin-left: 15%;">
@@ -388,6 +388,7 @@
 <script src="assets/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="assets/plugins/icheck/icheck.min.js"></script>
 <script src="assets/plugins/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
 </body>

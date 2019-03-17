@@ -6,26 +6,11 @@ $(function () {
         radioClass: 'iradio_flat-blue',
         increaseArea: '20%'
     });
+
     $('.chkx-toogle-main').bootstrapToggle({
         on: 'YES',
         off: 'NO'
     });
-    $('#mint_new_wrapper').on('change', '#mint_new_frozen_use', function () {
-        if ($(this).prop('checked')) {
-            $('#mint_new_frozen').removeAttr('disabled');
-        } else {
-            $('#mint_new_frozen').prop('disabled', true);
-        }
-    });
-
-    $('.datepicker').datepicker({
-        format: "dd.mm.yyyy",
-        language: "ru",
-        autoclose: true,
-        todayHighlight: true,
-        orientation: "top auto",
-    });
-
 
     i18next.init({
         tName: 't', // --> appends $.t = i18next.t
@@ -273,12 +258,35 @@ $(function () {
         let block = $('#mint_new_tpl').html();
         block = block.replace(/%%MINT_NEW_FORM_ID%%/g, "mint_new_"+mintNewItem);
         block = block.replace(/%%FRM-NUM%%/g, mintNewItem);
-        $(block).insertBefore("#mint_new_main");
+
+        block = $(block);
+        block.find('.frozen_use')
+            .bootstrapToggle({
+                on: 'YES',
+                off: 'NO'
+            })
+            .change(function() {
+                let $this = $(this);
+                let formId = $this.data('form');
+                if ($this.prop('checked')) {
+                    $('[name="mint_new['+formId+'][frozen]"]', block).removeAttr('disabled');
+                } else {
+                    $('[name="mint_new['+formId+'][frozen]"]', block).prop('disabled', true);
+                }
+            });
+        block.find('.datepicker')
+            .datepicker({
+                format: "dd.mm.yyyy",
+                language: "ru",
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "top auto",
+        });
+        block.insertBefore("#mint_new_main");
     });
 
-    $('#mint_new_wrapper').on('click', '.mint-new-cancel', function (e) {
-        let target = $(this).data('target');
-        $('[data-id=' + target + ']', $('#mint_new_wrapper')).remove();
+    $('#mint_new_wrapper').on('click', '.mint-new-cancel', function () {
+        let wrapper = $(this).data('wrapper');
+        $('[data-id=' + wrapper + ']', $('#mint_new_wrapper')).remove();
     });
-
 });
