@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Doughnut Chart</title>
+    <link rel="stylesheet" href="assets/components/bootstrap/bootstrap.min.css">
+    <script src="assets/components/jquery/jquery.min.js"></script>
+    <script src="assets/components/bootstrap/bootstrap.min.js"></script>
+    <script src="chart.min.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="row">
+    <div class="col-md-7">
+        <canvas id="chart-area"></canvas>
+    </div>
+</div>
+
+
+
+<button id="randomizeData">Randomize Data</button>
+<button id="addDataset">Add Dataset</button>
+<button id="removeDataset">Remove Dataset</button>
+<button id="addData">Add Data</button>
+<button id="removeData">Remove Data</button>
+<button id="changeCircleSize">Semi/Full Circle</button>
+<script>
+    Chart.defaults.doughnutLabels = Chart.helpers.clone(Chart.defaults.doughnut);
+
+    var helpers = Chart.helpers;
+    var defaults = Chart.defaults;
+
+    Chart.controllers.doughnutLabels = Chart.controllers.doughnut.extend({
+        updateElement: function(arc, index, reset) {
+            var _this = this;
+            var chart = _this.chart,
+                chartArea = chart.chartArea,
+                opts = chart.options,
+                animationOpts = opts.animation,
+                arcOpts = opts.elements.arc,
+                centerX = (chartArea.left + chartArea.right) / 2,
+                centerY = (chartArea.top + chartArea.bottom) / 2,
+                startAngle = opts.rotation, // non reset case handled later
+                endAngle = opts.rotation, // non reset case handled later
+                dataset = _this.getDataset(),
+                circumference = reset && animationOpts.animateRotate ? 0 : arc.hidden ? 0 : _this.calculateCircumference(dataset.data[index]) * (opts.circumference / (2.0 * Math.PI)),
+                innerRadius = reset && animationOpts.animateScale ? 0 : _this.innerRadius,
+                outerRadius = reset && animationOpts.animateScale ? 0 : _this.outerRadius,
+                custom = arc.custom || {},
+                valueAtIndexOrDefault = helpers.getValueAtIndexOrDefault;
+
+            helpers.extend(arc, {
+                // Utility
+                _datasetIndex: _this.index,
+                _index: index,
+
+                // Desired view properties
+                _model: {
+                    x: centerX + chart.offsetX,
+                    y: centerY + chart.offsetY,
+                    startAngle: startAngle,
+                    endAngle: endAngle,
+                    circumference: circumference,
+                    outerRadius: outerRadius,
+                    innerRadius: innerRadius,
+                    label: valueAtIndexOrDefault(dataset.label, index, chart.data.labels[index])
+                },
+
+                draw: function () {
+                    var ctx = this._chart.ctx,
+                        vm = this._view,
+                        sA = vm.startAngle,
+                        eA = vm.endAngle,
+                        opts = this._chart.config.options;
+
+                    var labelPos = this.tooltipPosition();
+                    var segmentLabel = vm.circumference / opts.circumference * 100;
+
+                    ctx.beginPath();
+
+                    ctx.arc(vm.x, vm.y, vm.outerRadius, sA, eA);
+                    ctx.arc(vm.x, vm.y, vm.innerRadius, eA, sA, true);
+
+                    ctx.closePath();
+                    ctx.strokeStyle = vm.borderColor;
+                    ctx.lineWidth = vm.borderWidth;
+
+                    ctx.fillStyle = vm.backgroundColor;
+
+                    ctx.fill();
+                    ctx.lineJoin = 'bevel';
+
+                    if (vm.borderWidth) {
+                        ctx.stroke();
+                    }
+
+                    if (vm.circumference > 0.15) { // Trying to hide label when it doesn't fit in segment
+                        ctx.beginPath();
+                        ctx.font = helpers.fontString(opts.defaultFontSize, opts.defaultFontStyle, opts.defaultFontFamily);
+                        ctx.fillStyle = "#fff";
+                        ctx.textBaseline = "top";
+                        ctx.textAlign = "center";
+
+                        // Round percentage in a way that it always adds up to 100%
+                        ctx.fillText(segmentLabel.toFixed(2) + "%", labelPos.x, labelPos.y);
+                    }
+                }
+            });
+
+            var model = arc._model;
+            model.backgroundColor = custom.backgroundColor ? custom.backgroundColor : valueAtIndexOrDefault(dataset.backgroundColor, index, arcOpts.backgroundColor);
+            model.hoverBackgroundColor = custom.hoverBackgroundColor ? custom.hoverBackgroundColor : valueAtIndexOrDefault(dataset.hoverBackgroundColor, index, arcOpts.hoverBackgroundColor);
+            model.borderWidth = custom.borderWidth ? custom.borderWidth : valueAtIndexOrDefault(dataset.borderWidth, index, arcOpts.borderWidth);
+            model.borderColor = custom.borderColor ? custom.borderColor : valueAtIndexOrDefault(dataset.borderColor, index, arcOpts.borderColor);
+
+            // Set correct angles if not resetting
+            if (!reset || !animationOpts.animateRotate) {
+                if (index === 0) {
+                    model.startAngle = opts.rotation;
+                } else {
+                    model.startAngle = _this.getMeta().data[index - 1]._model.endAngle;
+                }
+
+                model.endAngle = model.startAngle + model.circumference;
+            }
+
+            arc.pivot();
+        }
+    });
+
+
+
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+    };
+
+    var config = {
+        type: 'doughnutLabels',
+        data: {
+            datasets: [{
+                data: [
+                    120.12,
+                    112.45,
+                    33.33,
+                    22.87,
+                    10.09,
+                ],
+                backgroundColor: [
+                    "#F7464A",
+                    "#46BFBD",
+                    "#FDB45C",
+                    "#949FB1",
+                    "#4D5360",
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                "Red",
+                "Green",
+                "Yellow",
+                "Grey",
+                "Dark Grey"
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Doughnut Chart'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+
+    var ctx = document.getElementById("chart-area").getContext("2d");
+    window.myDoughnut = new Chart(ctx, config);
+
+
+    document.getElementById('randomizeData').addEventListener('click', function() {
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+                return randomScalingFactor();
+            });
+        });
+
+        window.myDoughnut.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+        var newDataset = {
+            backgroundColor: [],
+            data: [],
+            label: 'New dataset ' + config.data.datasets.length,
+        };
+
+        for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+
+            var colorName = colorNames[index % colorNames.length];
+            var newColor = window.chartColors[colorName];
+            newDataset.backgroundColor.push(newColor);
+        }
+
+        config.data.datasets.push(newDataset);
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('addData').addEventListener('click', function() {
+        if (config.data.datasets.length > 0) {
+            config.data.labels.push('data #' + config.data.labels.length);
+
+            var colorName = colorNames[config.data.datasets[0].data.length % colorNames.length];
+            var newColor = window.chartColors[colorName];
+
+            config.data.datasets.forEach(function(dataset) {
+                dataset.data.push(randomScalingFactor());
+                dataset.backgroundColor.push(newColor);
+            });
+
+            window.myDoughnut.update();
+        }
+    });
+
+    document.getElementById('removeDataset').addEventListener('click', function() {
+        config.data.datasets.splice(0, 1);
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('removeData').addEventListener('click', function() {
+        config.data.labels.splice(-1, 1); // remove the label first
+
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data.pop();
+            dataset.backgroundColor.pop();
+        });
+
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('changeCircleSize').addEventListener('click', function() {
+        if (window.myDoughnut.options.circumference === Math.PI) {
+            window.myDoughnut.options.circumference = 2 * Math.PI;
+            window.myDoughnut.options.rotation = -Math.PI / 2;
+        } else {
+            window.myDoughnut.options.circumference = Math.PI;
+            window.myDoughnut.options.rotation = -Math.PI;
+        }
+
+        window.myDoughnut.update();
+    });
+</script>
+</body>
+
+</html>
