@@ -253,6 +253,10 @@ $(function () {
     }
 
 
+    $.validator.addMethod("need-validate", function(value, element) {
+        return !this.optional(element);
+    }, "");
+
     var today = new Date();
     var offsetHours = -today.getTimezoneOffset() / 60;
     offsetHours = (offsetHours >= 0 ? '+' + offsetHours : offsetHours);
@@ -298,26 +302,19 @@ $(function () {
                 orientation: "top auto"
             });
 
-        block.find("#"+formId).validate({
-            rules: {
-                "mint_new[1][address]": {
-                    required: true
+        block.find("#"+formId)
+            .validate({
+                errorPlacement: function () {
+                    return false;
                 },
-                "mint_new[1][amount]": {
-                    required: true
+                highlight: function (element) {
+                    $(element).addClass('error');
                 }
-            },
-            errorPlacement: function () {
-                return false;
-            },
-            highlight: function (element) {
-                $(element).addClass('error');
-            }
-        });
-        block.find("#"+formId).on('change click keyup', '.need-validate', function () {
-            let element = $(this).attr('name');
-            let isFieldValid = $('input[name="' + element + '"]', block).valid();
-        });
+            })
+            .on('change click keyup', '.need-validate', function () {
+                let element = $(this).attr('name');
+                let isFieldValid = $('input[name="' + element + '"]', block).valid();
+            });
 
         block.insertBefore("#mint_new_main");
     });

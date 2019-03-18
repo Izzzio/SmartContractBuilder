@@ -353,7 +353,7 @@
                 <div class="row">
                     <div class="col-md-6 m-top-15">
                         <label for="mint_new_amount[%%FRM-NUM%%]" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                        <input type="text" class="form-control input-lg need-validate" id="mint_new_amount[%%FRM-NUM%%]" name="mint_new[%%FRM-NUM%%][amount]">
+                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount[%%FRM-NUM%%]" name="mint_new[%%FRM-NUM%%][amount]">
                     </div>
                     <div class="col-md-6 m-top-15">
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
