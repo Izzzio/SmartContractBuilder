@@ -310,18 +310,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 m-top-15">
-                        <label for="mint_new_address[%%FRM-NUM%%]" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
-                        <input type="text" class="form-control input-lg need-validate" id="mint_new_address[%%FRM-NUM%%]" name="mint_new[%%FRM-NUM%%][address]" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
+                        <label for="mint_new_address_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
+                        <input type="text" class="form-control input-lg need-validate" id="mint_new_address_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][address]" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
                     </div>
                     <div class="col-md-4 m-top-15">
-                        <label for="mint_new_name[%%FRM-NUM%%]" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
-                        <input type="text" class="form-control input-lg" id="mint_new_name[%%FRM-NUM%%]" name="mint_new[%%FRM-NUM%%][name]">
+                        <label for="mint_new_name_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
+                        <input type="text" class="form-control input-lg" id="mint_new_name_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][name]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 m-top-15">
-                        <label for="mint_new_amount[%%FRM-NUM%%]" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount[%%FRM-NUM%%]" name="mint_new[%%FRM-NUM%%][amount]">
+                        <label for="mint_new_amount_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
+                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]">
                     </div>
                     <div class="col-md-6 m-top-15">
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
@@ -338,6 +338,16 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<div id="chart_tpl" style="display: none;">
+    <div class="box box-default box-solid" data-id="%%MINT_NEW_FORM_ID%%" style="margin-top: 0px;">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12 m-top-15">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

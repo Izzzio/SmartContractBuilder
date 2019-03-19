@@ -184,14 +184,12 @@ $(function () {
     $('#step_1').on('change click keyup', 'input', function () {
         blocksFilled[1] = false;
         let element = $(this).attr('name');
-        let isFieldValid = $('input[name="' + element + '"]').valid();
         if (!block_1_fields[element]) {
             block_1_fields[element] = 0;
         }
-        block_1_fields[element] = isFieldValid ? 1 : 0;
+        block_1_fields[element] = $(this).valid() ? 1 : 0;
 
         const propOwn = Object.getOwnPropertyNames(block_1_fields);
-
         if (3 === propOwn.length) {
             try {
                 for (var prop in block_1_fields) {
@@ -209,11 +207,10 @@ $(function () {
     var block_3_fields = {};
     $('#step_3').on('change click keyup', 'input', function () {
         let element = $(this).attr('name');
-        let isFieldValid = $('input[name="' + element + '"]').valid();
         if (!block_3_fields[element]) {
             block_3_fields[element] = 0;
         }
-        block_3_fields[element] = isFieldValid ? 1 : 0;
+        block_3_fields[element] = $(this).valid() ? 1 : 0;
         blocksFilled[3] = !!block_3_fields[element];
         updateBlocksAvailability();
     });
@@ -225,17 +222,14 @@ $(function () {
             setBlocksUnavailable('step_3');
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            setBlocksUnavailable('step_6');
         }
         if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
-            setBlocksAvailable('step_6');
             $('#save').removeClass('disabled');
         } else {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            setBlocksUnavailable('step_6');
             $('#save').addClass('disabled');
         }
     }
@@ -249,7 +243,7 @@ $(function () {
     }
 
 
-    $.validator.addMethod("need-validate", function(value, element) {
+    $.validator.addMethod("need-validate", function (value, element) {
         return !this.optional(element);
     }, "");
 
@@ -274,7 +268,7 @@ $(function () {
             })
             .change(function () {
                 let $this = $(this);
-                let formId = $this.data('form');
+                let formId = $this.data('form') || 0;
                 if ($this.prop('checked')) {
                     $('[name="mint_new[' + formId + '][frozen]"]', block).removeAttr('disabled');
                 } else {
@@ -298,7 +292,22 @@ $(function () {
                 orientation: "top auto"
             });
 
-        block.find("#"+formId)
+        block.find("#" + formId)
+            .on('change click keyup', '.need-validate', function () {
+
+
+                /*
+                TODO
+                добавить проверку на изменения поля Name: если значение в поле изменилось -
+                перерисовать график
+                 */
+
+
+                let element = $(this);
+                if (checkForm(formId, element)) {
+                    updateChart();
+                }
+            })
             .validate({
                 errorPlacement: function () {
                     return false;
@@ -306,10 +315,6 @@ $(function () {
                 highlight: function (element) {
                     $(element).addClass('error');
                 }
-            })
-            .on('change click keyup', '.need-validate', function () {
-                let element = $(this).attr('name');
-                let isFieldValid = $('input[name="' + element + '"]', block).valid();
             });
 
         block.insertBefore("#mint_new_main");
@@ -319,4 +324,42 @@ $(function () {
         let wrapper = $(this).data('wrapper');
         $('[data-id=' + wrapper + ']', $('#mint_new_wrapper')).remove();
     });
+
+    let mintForms = {};
+    let checkForm = function (formId, el) {
+        let result = false;
+        let fieldId = el.attr('id');
+
+        if (!mintForms[formId]) {
+            mintForms[formId] = {};
+        }
+        mintForms[formId][fieldId] = el.valid() ? 1 : 0;
+
+        $(".need-validate", "#" + formId).each(function (key, el) {
+            let fieldId = $(this).attr('id') || 0;
+            let fieldValid = mintForms[formId][fieldId] || 0;
+            if (!fieldId || !fieldValid) {
+                result = false;
+                return false;
+            }
+            result = true;
+        });
+
+        if (result) {
+            const propOwn = Object.getOwnPropertyNames(mintForms[formId]);
+            if (2 !== propOwn.length) {
+                result = false;
+            }
+        }
+
+        return result;
+    };
+
+    let updateChart = function () {
+
+
+        console.log('updateChart');
+
+
+    }
 });
