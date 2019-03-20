@@ -324,26 +324,26 @@
                 <div class="row">
                     <div class="col-md-8 m-top-15">
                         <label for="mint_new_address_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
-                        <input type="text" class="form-control input-lg need-validate" id="mint_new_address_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][address]" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
+                        <input type="text" class="form-control input-lg need-validate" id="mint_new_address_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][address]" data-name="address" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
                     </div>
                     <div class="col-md-4 m-top-15">
                         <label for="mint_new_name_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
-                        <input type="text" class="form-control input-lg watch-changes" id="mint_new_name_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][name]">
+                        <input type="text" class="form-control input-lg watch-changes" id="mint_new_name_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][name]" data-name="name">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 m-top-15">
                         <label for="mint_new_amount_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]">
+                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]" data-name="amount">
                     </div>
                     <div class="col-md-6 m-top-15">
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%">
+                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-name="frozen_use" data-form="%%FRM-NUM%%">
                             </span>
                             <div class="input-group">
-                                <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" readonly disabled style="width: 85%; margin-left: 15%;">
+                                <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" data-name="frozen" readonly disabled style="width: 85%; margin-left: 15%;">
                                 <span class="input-group-addon"><i class="far fa-calendar-alt fa-lg text-primary"></i></span>
                             </div>
                         </div>

@@ -241,11 +241,34 @@ $(function () {
             dataset.data = data.tokens;
         });
         configChart.data.labels = data.address;
+        configChart.options.title.text = i18next.t("eth_tkn_contract.menu.create");
         window.mintChart.update();
     };
 
     let collectMintNewData = function () {
-        let res = {'address': ['0xD0593B233Be4411A236F22b42087345E1137170b', 55], 'tokens': [10, 30]};
+        let res = {'address': [], 'tokens': []};
+        let collectedData = [];
+        $("form[id^='mint_new_']").each(function(formNum, form){
+            if(!collectedData[formNum]){
+                collectedData[formNum] = {'a': '', 'n': '', 't': ''};
+            }
+            let fields = $(this).find(":input");
+            fields.each(function (key, field) {
+                field = $(field);
+                let fieldName = field.data('name') || '';
+                if('address' === fieldName){
+                    collectedData[formNum].a = field.val();
+                } else if('name' === fieldName){
+                    collectedData[formNum].n = field.val();
+                } else if('amount' === fieldName){
+                    collectedData[formNum].t = field.val();
+                }
+            })
+        });
+        collectedData.forEach(function(element) {
+            res.address.push(element.n.length ? element.n : element.a);
+            res.tokens.push(element.t);
+        });
         return res;
     }
 });
