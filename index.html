@@ -246,17 +246,20 @@
                         </form>
                         <div class="overlay"></div>
                     </div>
-                    <div class="box box-default box-solid" id="chart-wrapper" style="display: none;">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-12 m-top-15">
-                                    <canvas id="chart-area" width="100" height="100"></canvas>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
+                    <div>
+                        <div class="box box-default box-solid" id="chart-wrapper" style="display: none;">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-10 col-xs-12 m-top-15">
+                                        <canvas id="chart-area" width="100" height="100"></canvas>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
+                                    </div>
                                 </div>
                             </div>
+                            <div class="overlay" style="display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -334,7 +337,7 @@
                 <div class="row">
                     <div class="col-md-6 m-top-15">
                         <label for="mint_new_amount_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                        <input type="text" maxlength="20" pattern="[0-9]+([\.,][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]" data-name="amount">
+                        <input type="text" maxlength="20" pattern="[0-9]+([\.][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]" data-name="amount">
                     </div>
                     <div class="col-md-6 m-top-15">
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
@@ -351,6 +354,7 @@
                 </div>
             </div>
         </form>
+        <div class="overlay" style="display: none;"></div>
     </div>
 </div>
 

@@ -136,7 +136,7 @@ let configChart = {
         },
         title: {
             display: true,
-            text: 'Total supply: 4 ETH'
+            text: ''
         },
         animation: {
             animateScale: true,

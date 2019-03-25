@@ -100,6 +100,9 @@ $(function () {
                     button: {
                         create: "Create",
                         clean: "<i class='far fa-times-circle'></i>&nbsp;&nbsp;Clean"
+                    },
+                    chart: {
+                        title: "Total supply: "
                     }
                 }
             },
