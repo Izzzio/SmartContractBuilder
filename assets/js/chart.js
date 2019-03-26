@@ -123,6 +123,8 @@ let configChart = {
                 "#FDB45C",
                 "#5fb17c",
                 "#4D5360",
+                "#d14e8f",
+                "#209c7a",
             ],
             label: 'Dataset 1'
         }],

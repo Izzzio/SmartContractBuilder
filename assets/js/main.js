@@ -3,6 +3,8 @@ $(function () {
 
     var mintNewNameTPL = 'mint_new_';
     var mintNewItem = 0;
+    let mintForms = {};
+    let chartWrapperName = 'chart-wrapper';
 
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
@@ -95,20 +97,20 @@ $(function () {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
             setNewMintsStatus(0);
-            setBlocksUnavailable('chart-wrapper');
+            setBlocksUnavailable(chartWrapperName);
         }
         if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
-            $('#save').removeClass('disabled');
+            $("#save").removeClass('disabled');
             setNewMintsStatus(1);
-            setBlocksAvailable('chart-wrapper');
+            setBlocksAvailable(chartWrapperName);
         } else {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            $('#save').addClass('disabled');
+            $("#save").addClass('disabled');
             setNewMintsStatus(0);
-            setBlocksUnavailable('chart-wrapper');
+            setBlocksUnavailable(chartWrapperName);
         }
     }
 
@@ -197,35 +199,46 @@ $(function () {
     });
 
     $('#mint_new_wrapper').on('click', '.mint-new-cancel', function () {
-
-        /*
-        TODO
-        удалить форму из хранилища состояний
-         */
-
-        let wrapper = $(this).data('wrapper');
-        $('[data-id=' + wrapper + ']', $('#mint_new_wrapper')).remove();
+        let wrapper = $(this).data('wrapper') || false;
+        if (wrapper) {
+            delete mintForms[wrapper];
+            $('[data-id=' + wrapper + ']', $('#mint_new_wrapper')).remove();
+            updateChart();
+        }
     });
 
     $('#tkn_symbol').on('keyup', function () {
         updateChart();
     });
 
-    let setNewMintsStatus = function(statusNew){
+    $('#clear').on('click', function () {
+        $("input[type=text], input[type=number]").val('');
+        $("#tkn_type_1").iCheck('check');
+        $("#save").addClass('disabled');
+        setBlocksUnavailable('step_3');
+        setBlocksUnavailable('step_4');
+        setBlocksUnavailable('step_5');
+        $("form[id^='" + mintNewNameTPL + "']").each(function () {
+            $(this).remove();
+        });
+        mintForms = {};
+        updateChart();
+    });
+
+    let setNewMintsStatus = function (statusNew) {
         statusNew = statusNew || 0;
-        for(let i = 1; i <= mintNewItem; ++i){
+        for (let i = 1; i <= mintNewItem; ++i) {
             let formId = mintNewNameTPL + i;
             statusNew ? setBlocksAvailable(formId) : setBlocksUnavailable(formId);
         }
     };
 
-    let mintForms = {};
-    let updateFormStateStorage = function(formId, el){
+    let updateFormStateStorage = function (formId, el) {
         let fieldId = el.attr('id') || false;
         if (!mintForms[formId]) {
             mintForms[formId] = {};
         }
-        if(fieldId){
+        if (fieldId) {
             mintForms[formId][fieldId] = el.valid() ? 1 : 0;
         }
     };
@@ -234,7 +247,7 @@ $(function () {
         let result = false;
         $(".need-validate", "#" + formId).each(function (key, el) {
             let form = mintForms[formId] || false;
-            if(form){
+            if (form) {
                 let fieldId = $(this).attr('id') || false;
                 let fieldValid = mintForms[formId][fieldId] || false;
                 if (!fieldId || !fieldValid) {
@@ -258,39 +271,53 @@ $(function () {
     let updateChart = function () {
         let data = collectMintNewData();
 
-        if(data.amount > 0){
-            $("#chart-wrapper").show();
-        }
+        $("#" + chartWrapperName).hide();
 
-        configChart.data.datasets.forEach(function(dataset) {
-            dataset.data = data.tokens;
-        });
-        configChart.data.labels = data.address;
-        configChart.options.title.text = i18next.t('eth_tkn_contract:chart.title') + data.amount + ' ' + $('#tkn_symbol').val();
-        window.mintChart.update();
+        if (data.amount > 0) {
+
+            $("input[name='future_minting_use']")
+                .prop('disabled', false)
+                .change()
+                .prop('checked', true)
+                .change();
+
+            $("#" + chartWrapperName).show();
+            configChart.data.datasets.forEach(function (dataset) {
+                dataset.data = data.tokens;
+            });
+            configChart.data.labels = data.address;
+            configChart.options.title.text = i18next.t('eth_tkn_contract:chart.title') + data.amount + ' ' + $('#tkn_symbol').val();
+            window.mintChart.update();
+        } else {
+            $("input[name='future_minting_use']")
+                .prop('checked', true)
+                .change()
+                .prop('disabled', true)
+                .change();
+        }
     };
 
     let collectMintNewData = function () {
         let res = {'address': [], 'tokens': [], 'amount': 0};
         let collectedData = [];
-        $("form[id^='"+mintNewNameTPL+"']").each(function(formNum, form){
-            if(!collectedData[formNum]){
+        $("form[id^='" + mintNewNameTPL + "']").each(function (formNum) {
+            if (!collectedData[formNum]) {
                 collectedData[formNum] = {'addr': '', 'name': '', 'tkns': ''};
             }
             let fields = $(this).find(":input");
             fields.each(function (key, field) {
                 field = $(field);
                 let fieldName = field.data('name') || '';
-                if('address' === fieldName){
+                if ('address' === fieldName) {
                     collectedData[formNum].addr = field.val();
-                } else if('name' === fieldName){
+                } else if ('name' === fieldName) {
                     collectedData[formNum].name = field.val();
-                } else if('amount' === fieldName){
+                } else if ('amount' === fieldName) {
                     collectedData[formNum].tkns = field.val();
                 }
             })
         });
-        collectedData.forEach(function(element) {
+        collectedData.forEach(function (element) {
             res.address.push(element.name.length ? element.name : element.addr);
             res.tokens.push(element.tkns);
             res.amount = Number(res.amount) + Number(element.tkns);

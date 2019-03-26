@@ -156,7 +156,7 @@
                                         <div class="col-md-3">
                                             <div class="radio">
                                                 <label style="padding-left: 0px;">
-                                                    <input type="radio" id="tkn_type_1" name="tkn_type" value="20" class="flat-blue" checked="">
+                                                    <input type="radio" id="tkn_type_1" name="tkn_type" value="20" class="flat-blue" checked="checked">
                                                     <strong data-i18n="eth_tkn_contract:fields.type_1.label"></strong>
                                                 </label>
                                             </div>
@@ -277,11 +277,7 @@
                                         <label data-i18n="[html]eth_tkn_contract:fields.future_minting.label"></label>
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
-                                        <div class="checkbox disabled">
-                                            <label>
-                                                <input type="checkbox" disabled="disabled" checked="checked" class="chkx-toogle-main">
-                                            </label>
-                                        </div>
+                                        <input type="checkbox" disabled="disabled" checked="checked" class="chkx-toogle-main" name="future_minting_use">
                                     </div>
                                     <div class="col-md-6 col-sm-7 col-xs-12 vcenter">
                                         <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.future_minting.help">
@@ -302,7 +298,7 @@
             <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
                     <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="save"></button>
-                    <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" style="margin-left: 20px;"></button>
+                    <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" id="clear" style="margin-left: 20px;"></button>
                 </div>
             </div>
         </section>
@@ -343,7 +339,7 @@
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-name="frozen_use" data-form="%%FRM-NUM%%">
+                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%">
                             </span>
                             <div class="input-group">
                                 <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" data-name="frozen" readonly disabled style="width: 85%; margin-left: 15%;">
