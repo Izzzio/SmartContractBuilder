@@ -99,11 +99,15 @@ $(function () {
                     },
                     button: {
                         create: "Create",
-                        clean: "<i class='far fa-times-circle'></i>&nbsp;&nbsp;Clean"
+                        clean: "<i class='far fa-times-circle'></i>&nbsp;&nbsp;Clean",
+                        save: "Save",
                     },
                     chart: {
                         title: "Total supply: "
-                    }
+                    },
+                    preview: {
+                        label: "Result: contract token code",
+                    },
                 }
             },
             ru: {

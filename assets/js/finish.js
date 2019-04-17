@@ -1,6 +1,21 @@
 $(function () {
     'use strict';
 
+    $("#create").on('click', function () {
+        $("#preview").html('<pre><code>/**\n' +
+            ' * Token emission amount\n' +
+            ' * @type {number}\n' +
+            ' */\n' +
+            'const EMISSION = 9999999999;\n' +
+            '\n' +
+            '/**\n' +
+            ' * Token full name\n' +
+            ' * @type {string}\n' +
+            ' */\n' +
+            'const TOKEN_NAME = \'IZZZIO main token\';</code></pre>');
+    });
+
+
     /*
     function download(filename, text) {
         var element = document.createElement('a');
@@ -17,6 +32,7 @@ $(function () {
     download(filename, text);
     */
 
+    /*
     var content = "What's up , hello world";
     var filename = "contract.js";
 
@@ -25,4 +41,6 @@ $(function () {
     });
 
     saveAs(blob, filename);
+    */
+
 });

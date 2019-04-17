@@ -102,13 +102,13 @@ $(function () {
         if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
-            $("#save").removeClass('disabled');
+            $("#create").removeClass('disabled');
             setNewMintsStatus(1);
             setBlocksAvailable(chartWrapperName);
         } else {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            $("#save").addClass('disabled');
+            $("#create").addClass('disabled');
             setNewMintsStatus(0);
             setBlocksUnavailable(chartWrapperName);
         }
@@ -214,7 +214,7 @@ $(function () {
     $('#clear').on('click', function () {
         $("input[type=text], input[type=number]").val('');
         $("#tkn_type_1").iCheck('check');
-        $("#save").addClass('disabled');
+        $("#create").addClass('disabled');
         setBlocksUnavailable('step_3');
         setBlocksUnavailable('step_4');
         setBlocksUnavailable('step_5');

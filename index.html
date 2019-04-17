@@ -295,10 +295,48 @@
                 </div>
             </div>
 
-            <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="row" style="margin-top: 10px; margin-bottom: 27px;">
                 <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="save"></button>
+                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="create"></button>
                     <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" id="clear" style="margin-left: 20px;"></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
+                    <div class="box box-default box-solid">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label data-i18n="eth_tkn_contract:preview.label"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div id="preview" class="col-md-12">
+<pre><code>/**
+ * Token emission amount
+ * @type {number}
+ */
+const EMISSION = 9999999999;
+
+/**
+ * Token full name
+ * @type {string}
+ */
+const TOKEN_NAME = 'IZZZIO main token';</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
+                                        <button type="button" data-i18n="eth_tkn_contract:button.save" class="btn btn-lg btn-primary" id="save"></button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
                 </div>
             </div>
         </section>
