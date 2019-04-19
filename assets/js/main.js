@@ -225,6 +225,17 @@ $(function () {
         updateChart();
     });
 
+    $("#create").on('click', function () {
+        let params = {
+            'name': $('#tkn_name').val() || null,
+            'symbol': $('#tkn_symbol').val() || null,
+            'decimals': $('#tkn_decimals').val() || null
+        };
+        let contractHandler = new generatorContract();
+        contractHandler.create(params);
+        $("#preview").html('<pre><code>' + contractHandler.getPreview() + '</code></pre>');
+    });
+
     let setNewMintsStatus = function (statusNew) {
         statusNew = statusNew || 0;
         for (let i = 1; i <= mintNewItem; ++i) {
