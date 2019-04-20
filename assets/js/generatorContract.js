@@ -18,11 +18,12 @@ class generatorContract extends generatorMain{
 
     addName(name){
         let block = "";
-        block += this.blockCommentStart;
-        block += " * Token full name";
-        block += " * @type {string}";
-        block += this.blockCommentFinish;
+        block += this.blockCommentBegin + this.newLine;
+        block += this.blockCommentStartLine + "Token full name" + this.newLine;
+        block += this.blockCommentStartLine + "@type {string}" + this.newLine;
+        block += this.blockCommentEnd + this.newLine;
         block += "const TOKEN_NAME = '" + name + "';";
+        block += this.newLine + this.newLine;
         this.contract += block;
     }
 }

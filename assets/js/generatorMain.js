@@ -5,7 +5,10 @@ class generatorMain {
     constructor(settings) {
         this.settings = settings;
 
-        this.blockCommentStart = '/**';
-        this.blockCommentFinish = '*/';
+        this.blockCommentBegin = '/**';
+        this.blockCommentEnd = ' */';
+        this.blockCommentStartLine = ' * ';
+
+        this.newLine = '\n';
     }
 }
