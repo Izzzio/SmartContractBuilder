@@ -6,9 +6,15 @@ class generatorContract extends generatorMain{
         this.contract = "";
     }
 
-    create(params){
+    newContract(params){
         if(params.name){
             this.addName(params.name);
+        }
+        if(params.symbol){
+            this.addSymbol(params.symbol);
+        }
+        if(params.decimals){
+            this.addDecimals(params.decimals);
         }
     }
 
@@ -16,13 +22,51 @@ class generatorContract extends generatorMain{
         return this.contract;
     }
 
-    addName(name){
-        let block = "";
+    addComments(comments){
+        let block = '';
+        let blockCommentStartLine = this.blockCommentStartLine;
+        let newLine = this.newLine;
         block += this.blockCommentBegin + this.newLine;
-        block += this.blockCommentStartLine + "Token full name" + this.newLine;
-        block += this.blockCommentStartLine + "@type {string}" + this.newLine;
+        comments.forEach(function(comment) {
+            block += blockCommentStartLine + comment + newLine;
+        });
         block += this.blockCommentEnd + this.newLine;
-        block += "const TOKEN_NAME = '" + name + "';";
+
+        return block;
+    }
+
+    addName(name){
+        let block = '';
+        let comments = [
+            'Token full name',
+            '@type {string}'
+        ];
+        block += this.addComments(comments);
+        block += "const NAME = '" + name + "';";
+        block += this.newLine + this.newLine;
+        this.contract += block;
+    }
+
+    addSymbol(symbol){
+        let block = '';
+        let comments = [
+            'Token ticker',
+            '@type {string}'
+        ];
+        block += this.addComments(comments);
+        block += "const TICKER = '" + symbol + "';";
+        block += this.newLine + this.newLine;
+        this.contract += block;
+    }
+
+    addDecimals(numberDigits){
+        let block = '';
+        let comments = [
+            'Number of decimals for token',
+            '@type {string}'
+        ];
+        block += this.addComments(comments);
+        block += "const DECIMALS = '" + numberDigits + "';";
         block += this.newLine + this.newLine;
         this.contract += block;
     }

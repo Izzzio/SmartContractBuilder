@@ -232,7 +232,7 @@ $(function () {
             'decimals': $('#tkn_decimals').val() || null
         };
         let contractHandler = new generatorContract();
-        contractHandler.create(params);
+        contractHandler.newContract(params);
         $("#preview").html('<pre><code>' + contractHandler.getPreview() + '</code></pre>');
     });
 
