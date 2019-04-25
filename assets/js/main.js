@@ -229,11 +229,17 @@ $(function () {
         let params = {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
-            'decimals': $('#tkn_decimals').val() || null
+            'decimals': $('#tkn_decimals').val() || null,
+            'mintingFeature': '',
         };
         let contractHandler = new generatorContract();
         contractHandler.newContract(params);
-        $("#preview").html('<pre><code>' + contractHandler.getPreview() + '</code></pre>');
+        let contract = contractHandler.getPreview();
+        if(contract.length){
+            $("#preview").html('<pre><code>' + contract + '</code></pre>');
+        } else {
+            console.log('Code contract empty.');
+        }
     });
 
     let setNewMintsStatus = function (statusNew) {
