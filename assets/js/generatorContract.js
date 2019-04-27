@@ -3,6 +3,7 @@
 class generatorContract extends generatorMain {
     constructor() {
         super();
+        this.minting = [];
         this.mintingFeature = true;
         this.contract = "";
     }
@@ -17,8 +18,15 @@ class generatorContract extends generatorMain {
         if (params.decimals) {
             this.addDecimals(params.decimals);
         }
+        if (params.minting) {
+            for (let i = 0; i < params.minting.length; i++) {
+                if (Number(params.minting[i].tokens) > 0) {
+                    this.minting.push(params.minting[i]);
+                }
+            }
+        }
         if (params.mintingFeature) {
-            this.mintingFeature = mintingFeature;
+            this.mintingFeature = params.mintingFeature;
         }
 
         this.buildContract();
@@ -108,9 +116,23 @@ class generatorContract extends generatorMain {
         ];
         block += this.addComments(comments, 4);
         block += this.addIndents(4);
-        block += "init(mintable = "+this.mintingFeature+") {" + this.newLine;
+        block += "init(mintable = " + this.mintingFeature + ") {" + this.newLine;
         block += this.addIndents(8);
-        block += "super.init();" + this.newLine;
+        block += "super.init(0, mintable);" + this.newLine;
+
+        if (this.minting.length) {
+            block += this.addIndents(8);
+            block += "if(contracts.isDeploy()) {" + this.newLine;
+            for (let i = 0; i < this.minting.length; i++) {
+                block += this.addIndents(12);
+                block += "this._wallets.mint(" + this.minting[i].address + ", " + this.minting[i].tokens + ");" + this.newLine;
+                block += this.addIndents(12);
+                block += "this._MintEvent.emit(" + this.minting[i].address + ", new BigNumber(" + this.minting[i].tokens + "));" + this.newLine;
+            }
+            block += this.addIndents(8);
+            block += "}" + this.newLine;
+        }
+
         block += this.addIndents(4);
         block += "}" + this.newLine;
         this.contract += block;

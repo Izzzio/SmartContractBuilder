@@ -230,7 +230,11 @@ $(function () {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
             'decimals': $('#tkn_decimals').val() || null,
-            'mintingFeature': '',
+            'minting': [
+                {'address': '1', 'addressName': 'One', 'tokens': '11', 'frozen': ''},
+                {'address': '2', 'addressName': 'Two', 'tokens': '22', 'frozen': '27.04.2020'},
+            ],
+            'mintingFeature': 'false',
         };
         let contractHandler = new generatorContract();
         contractHandler.newContract(params);
