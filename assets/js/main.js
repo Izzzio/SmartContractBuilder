@@ -230,12 +230,20 @@ $(function () {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
             'decimals': $('#tkn_decimals').val() || null,
-            'minting': [
-                {'address': '1', 'addressName': 'One', 'tokens': '11', 'frozen': ''},
-                {'address': '2', 'addressName': 'Two', 'tokens': '22', 'frozen': '27.04.2020'},
-            ],
-            'mintingFeature': 'false',
+            'minting': [],
+            'mintingFeature': String($("input[name='future_minting_use']").prop('checked')),
         };
+
+        let collectedData = collectMintNewData();
+        collectedData.forEach(function (element) {
+            params.minting.push({
+                'address': element.addr,
+                'addressName': element.name.length ? element.name : '',
+                'tokens': element.tkns,
+                'frozen': element.frozen
+            });
+        });
+
         let contractHandler = new generatorContract();
         contractHandler.newContract(params);
         let contract = contractHandler.getPreview();
@@ -290,7 +298,7 @@ $(function () {
     };
 
     let updateChart = function () {
-        let data = collectMintNewData();
+        let data = collectMintNewDataForChart();
 
         $("#" + chartWrapperName).hide();
 
@@ -319,11 +327,10 @@ $(function () {
     };
 
     let collectMintNewData = function () {
-        let res = {'address': [], 'tokens': [], 'amount': 0};
         let collectedData = [];
         $("form[id^='" + mintNewNameTPL + "']").each(function (formNum) {
             if (!collectedData[formNum]) {
-                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': ''};
+                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': '', 'frozen': ''};
             }
             let fields = $(this).find(":input");
             fields.each(function (key, field) {
@@ -334,15 +341,24 @@ $(function () {
                 } else if ('name' === fieldName) {
                     collectedData[formNum].name = field.val();
                 } else if ('amount' === fieldName) {
-                    collectedData[formNum].tkns = field.val();
+                    collectedData[formNum].tkns = Number(field.val());
+                } else if ('frozen_use' === fieldName && field.prop('checked')) {
+                    field = $(fields[key+1]);
+                    collectedData[formNum].frozen = field.val();
                 }
             })
         });
+        return collectedData;
+    };
+
+    let collectMintNewDataForChart = function () {
+        let res = {'address': [], 'tokens': [], 'amount': 0};
+        let collectedData = collectMintNewData();
         collectedData.forEach(function (element) {
             res.address.push(element.name.length ? element.name : element.addr);
             res.tokens.push(element.tkns);
             res.amount = Number(res.amount) + Number(element.tkns);
         });
         return res;
-    }
+    };
 });
