@@ -230,6 +230,7 @@ $(function () {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
             'decimals': $('#tkn_decimals').val() || null,
+            'owner': $('#tkn_owner').val() || null,
             'minting': [],
             'mintingFeature': String($("input[name='future_minting_use']").prop('checked')),
         };
@@ -330,7 +331,7 @@ $(function () {
         let collectedData = [];
         $("form[id^='" + mintNewNameTPL + "']").each(function (formNum) {
             if (!collectedData[formNum]) {
-                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': '', 'frozen': ''};
+                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': '', 'frozen': false};
             }
             let fields = $(this).find(":input");
             fields.each(function (key, field) {

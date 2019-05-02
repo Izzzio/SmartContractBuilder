@@ -3,7 +3,17 @@
 class generatorContract extends generatorMain {
     constructor() {
         super();
-        this.minting = [];
+
+        /*
+        Minting tokens on addresses right now, without frozen
+         */
+        this.minting = {};
+
+        /*
+        Tokens must be frozen for addresses.
+         */
+        this.frozen = {};
+
         this.mintingFeature = true;
         this.contract = "";
     }
@@ -18,13 +28,36 @@ class generatorContract extends generatorMain {
         if (params.decimals) {
             this.addDecimals(params.decimals);
         }
+        if (params.owner) {
+            this.addOwner(params.owner);
+        }
         if (params.minting) {
+            let tokenAddress = false;
             for (let i = 0; i < params.minting.length; i++) {
                 if (Number(params.minting[i].tokens) > 0) {
-                    this.minting.push(params.minting[i]);
+                    tokenAddress = params.minting[i].address;
+                    if (params.minting[i].frozen) {
+                        if(!this.frozen.hasOwnProperty(tokenAddress)) {
+                            this.frozen[tokenAddress] = [];
+                        }
+                        this.frozen[tokenAddress].push({
+                            'addressName': params.minting[i].addressName,
+                            'tokens': params.minting[i].tokens,
+                            'frozen': moment(moment(params.minting[i].frozen, "DD.MM.YYYY")).valueOf()
+                        });
+                    } else {
+                        if(!this.minting.hasOwnProperty(tokenAddress)) {
+                            this.minting[tokenAddress] = [];
+                        }
+                        this.minting[tokenAddress].push({
+                            'addressName': params.minting[i].addressName,
+                            'tokens': params.minting[i].tokens
+                        });
+                    }
                 }
             }
         }
+
         if (params.mintingFeature) {
             this.mintingFeature = params.mintingFeature;
         }
@@ -97,6 +130,18 @@ class generatorContract extends generatorMain {
         this.contract += block;
     }
 
+    addOwner(address) {
+        let block = '';
+        let comments = [
+            'Address of main contract owner',
+            '@type {string}'
+        ];
+        block += this.addComments(comments);
+        block += "const OWNER = '" + address + "';";
+        block += this.newLine + this.newLine;
+        this.contract += block;
+    }
+
     buildContract() {
         let block = this.newLine + this.newLine;
         let comments = [
@@ -122,12 +167,12 @@ class generatorContract extends generatorMain {
 
         if (this.minting.length) {
             block += this.addIndents(8);
-            block += "if(contracts.isDeploy()) {" + this.newLine;
+            block += "if (contracts.isDeploy()) {" + this.newLine;
             for (let i = 0; i < this.minting.length; i++) {
                 block += this.addIndents(12);
-                block += "this._wallets.mint(" + this.minting[i].address + ", " + this.minting[i].tokens + ");" + this.newLine;
+                block += "this._wallets.mint('" + this.minting[i].address + "', " + this.minting[i].tokens + ");" + this.newLine;
                 block += this.addIndents(12);
-                block += "this._MintEvent.emit(" + this.minting[i].address + ", new BigNumber(" + this.minting[i].tokens + "));" + this.newLine;
+                block += "this._MintEvent.emit('" + this.minting[i].address + "', new BigNumber(" + this.minting[i].tokens + "));" + this.newLine;
             }
             block += this.addIndents(8);
             block += "}" + this.newLine;
