@@ -7,7 +7,7 @@ class generatorContract extends generatorMain {
         /*
         Minting tokens on addresses right now, without frozen
          */
-        this.minting = {};
+        this.minting = [];
 
         /*
         Tokens must be frozen for addresses.
@@ -46,10 +46,8 @@ class generatorContract extends generatorMain {
                             'frozen': moment(moment(params.minting[i].frozen, "DD.MM.YYYY")).valueOf()
                         });
                     } else {
-                        if(!this.minting.hasOwnProperty(tokenAddress)) {
-                            this.minting[tokenAddress] = [];
-                        }
-                        this.minting[tokenAddress].push({
+                        this.minting.push({
+                            'address': tokenAddress,
                             'addressName': params.minting[i].addressName,
                             'tokens': params.minting[i].tokens
                         });
