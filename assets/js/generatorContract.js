@@ -78,7 +78,7 @@ class generatorContract extends generatorMain {
         return res;
     }
 
-    addComments(comments, indentsCount) {
+    addCommentsBlock(comments, indentsCount) {
         indentsCount = (Number(indentsCount) + 1) || 1;
         let block = '';
         let blockCommentStartLine = this.addIndents(indentsCount) + this.blockCommentStartLine + this.indent;
@@ -92,13 +92,21 @@ class generatorContract extends generatorMain {
         return block;
     }
 
+    addCommentsLine(comment, indentsCount) {
+        indentsCount = (Number(indentsCount)) || 0;
+        let block = '';
+        block += this.addIndents(indentsCount) + this.lineCommentBegin + this.indent + comment + this.newLine;
+
+        return block;
+    }
+
     addName(name) {
         let block = '';
         let comments = [
             'Token full name',
             '@type {string}'
         ];
-        block += this.addComments(comments);
+        block += this.addCommentsBlock(comments);
         block += "const NAME = '" + name + "';";
         block += this.newLine + this.newLine;
         this.contract += block;
@@ -110,7 +118,7 @@ class generatorContract extends generatorMain {
             'Token ticker',
             '@type {string}'
         ];
-        block += this.addComments(comments);
+        block += this.addCommentsBlock(comments);
         block += "const TICKER = '" + symbol + "';";
         block += this.newLine + this.newLine;
         this.contract += block;
@@ -122,7 +130,7 @@ class generatorContract extends generatorMain {
             'Number of decimals for token',
             '@type {string}'
         ];
-        block += this.addComments(comments);
+        block += this.addCommentsBlock(comments);
         block += "const DECIMALS = '" + numberDigits + "';";
         block += this.newLine + this.newLine;
         this.contract += block;
@@ -134,7 +142,7 @@ class generatorContract extends generatorMain {
             'Address of main contract owner',
             '@type {string}'
         ];
-        block += this.addComments(comments);
+        block += this.addCommentsBlock(comments);
         block += "const OWNER = '" + address + "';";
         block += this.newLine + this.newLine;
         this.contract += block;
@@ -145,7 +153,7 @@ class generatorContract extends generatorMain {
         let comments = [
             'Main token contract'
         ];
-        block += this.addComments(comments);
+        block += this.addCommentsBlock(comments);
         block += "class MyToken extends TokenContract {";
         block += this.newLine + this.newLine;
         this.contract += block;
@@ -157,11 +165,75 @@ class generatorContract extends generatorMain {
             'Initialization method',
             '@param {Boolean} mintable  Can mintable by owner in feature?'
         ];
-        block += this.addComments(comments, 4);
+        block += this.addCommentsBlock(comments, 4);
         block += this.addIndents(4);
         block += "init(mintable = " + this.mintingFeature + ") {" + this.newLine;
         block += this.addIndents(8);
         block += "super.init(0, mintable);" + this.newLine;
+
+
+        /*
+        this.frozen = {
+            '1a': [
+                {
+                    'frozen': 1724517254124,
+                    'tokens': 11,
+                    'addressName': '1n'
+                },
+                {
+                    'frozen': 1724517254124,
+                    'tokens': 11,
+                    'addressName': '1n'
+                }
+            ],
+            'ADDR_2': [
+                {
+                    'frozen': 1724517254124,
+                    'tokens': 11,
+                    'addressName': '1n'
+                },
+                {
+                    'frozen': 1724517254124,
+                    'tokens': 11,
+                    'addressName': '1n'
+                }
+            ]
+        };
+        */
+
+
+        if(Object.keys(this.frozen).length){
+            block += this.newLine;
+            block += this.addCommentsLine('List of frozen tokens', 8);
+            block += this.addIndents(8);
+            block += "this.frozen = {" + this.newLine;
+            for (let address in this.frozen) {
+                if (this.frozen.hasOwnProperty(address)) {
+                    block += this.addIndents(12);
+                    block += "'" + address + "': [" + this.newLine;
+                    for(let j = 0; j < this.frozen[address].length; j++) {
+                        block += this.addIndents(16) + "{" + this.newLine;
+                        if (this.frozen[address][j].addressName) {
+                            block += this.addIndents(20);
+                            block += "'addressName': '" + this.frozen[address][j].addressName + "'," + this.newLine;
+                        }
+                        block += this.addIndents(20);
+                        block += "'frozen': " + this.frozen[address][j].frozen + "," + this.newLine;
+                        block += this.addIndents(20);
+                        block += "'tokens': " + this.frozen[address][j].tokens + this.newLine;
+                        block += this.addIndents(16) + "}"+((j === this.frozen[address].length - 1) ? "" : ",")+ this.newLine;
+                    }
+                    block += this.addIndents(12);
+                    block += "]" + this.newLine;
+                }
+            }
+
+            block += this.addIndents(8);
+            block += "};" + this.newLine;
+        }
+
+
+
 
         if (this.minting.length) {
             block += this.addIndents(8);
@@ -188,7 +260,7 @@ class generatorContract extends generatorMain {
             'Basic contract info',
             '@return {{owner: string, ticker: string, name: string}}'
         ];
-        block += this.addComments(comments, 4);
+        block += this.addCommentsBlock(comments, 4);
         block += this.addIndents(4);
         block += "get contract() {" + this.newLine;
         block += this.addIndents(8);

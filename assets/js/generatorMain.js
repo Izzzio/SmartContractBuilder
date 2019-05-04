@@ -9,6 +9,8 @@ class generatorMain {
         this.blockCommentEnd = '*/';
         this.blockCommentStartLine = '*';
 
+        this.lineCommentBegin = '//';
+
         this.newLine = '\n';
         this.indent = ' ';
     }
