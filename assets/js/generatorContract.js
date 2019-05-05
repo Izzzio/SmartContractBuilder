@@ -14,6 +14,11 @@ class generatorContract extends generatorMain {
          */
         this.frozen = {};
 
+        /*
+        Need add method for get tokens that have freeze is over
+         */
+        this.needUnfreeze = false;
+
         this.mintingFeature = true;
         this.contract = "";
     }
@@ -37,7 +42,7 @@ class generatorContract extends generatorMain {
                 if (Number(params.minting[i].tokens) > 0) {
                     tokenAddress = params.minting[i].address;
                     if (params.minting[i].frozen) {
-                        if(!this.frozen.hasOwnProperty(tokenAddress)) {
+                        if (!this.frozen.hasOwnProperty(tokenAddress)) {
                             this.frozen[tokenAddress] = [];
                         }
                         this.frozen[tokenAddress].push({
@@ -63,6 +68,12 @@ class generatorContract extends generatorMain {
         this.buildContract();
         this.addMethodInit();
         this.addMethodContractInfo();
+
+        if(this.needUnfreeze) {
+            this.addMethodUnfreeze();
+        }
+
+        this.finishContract();
     }
 
     getPreview() {
@@ -171,45 +182,15 @@ class generatorContract extends generatorMain {
         block += this.addIndents(8);
         block += "super.init(0, mintable);" + this.newLine;
 
-
-        /*
-        this.frozen = {
-            '1a': [
-                {
-                    'frozen': 1724517254124,
-                    'tokens': 11,
-                    'addressName': '1n'
-                },
-                {
-                    'frozen': 1724517254124,
-                    'tokens': 11,
-                    'addressName': '1n'
-                }
-            ],
-            'ADDR_2': [
-                {
-                    'frozen': 1724517254124,
-                    'tokens': 11,
-                    'addressName': '1n'
-                },
-                {
-                    'frozen': 1724517254124,
-                    'tokens': 11,
-                    'addressName': '1n'
-                }
-            ]
-        };
-        */
-
-
         if (Object.keys(this.frozen).length) {
+            this.needUnfreeze = true;
             block += this.newLine;
             block += this.addCommentsLine('List of frozen tokens', 8);
             block += this.addIndents(8);
-            block += "this.frozen = {" + this.newLine;
+            block += "this._frozen = {" + this.newLine;
 
             let keys = Object.keys(this.frozen);
-            let lastKey = keys[keys.length-1];
+            let lastKey = keys[keys.length - 1];
 
             for (let address in this.frozen) {
                 if (this.frozen.hasOwnProperty(address)) {
@@ -235,8 +216,6 @@ class generatorContract extends generatorMain {
             block += this.addIndents(8);
             block += "};" + this.newLine;
         }
-
-
 
 
         if (this.minting.length) {
@@ -281,6 +260,57 @@ class generatorContract extends generatorMain {
         block += "};" + this.newLine;
         block += this.addIndents(4);
         block += "}" + this.newLine;
+        this.contract += block;
+    }
+
+    addMethodUnfreeze(){
+        let block = this.newLine;
+        block += this.addIndents(4);
+        let comments = [
+            'Get your own tokens that have freeze is ended',
+            //'@param {String} address  Address for find tokens'
+        ];
+        block += this.addCommentsBlock(comments, 4);
+        block += this.addIndents(4);
+        block += "getTokensWithFreezeIsOver() {" + this.newLine;
+
+
+
+
+
+        const addressForTokens = contracts.caller();
+        const currTimestamp = moment().utc().valueOf();
+        for (let address in this._frozen) {
+            if (!this._frozen.hasOwnProperty(address)) {
+                continue;
+            }
+            if (address !== addressForTokens) {
+                continue;
+            }
+            for(let i = 0; i < this._frozen[address].length; i++){
+                if(this._frozen[address][i].frozen >= currTimestamp){
+                    this._wallets.mint(addressForTokens, this._frozen[address][i].tokens);
+                    this._MintEvent.emit(addressForTokens, new BigNumber(this._frozen[address][i].tokens));
+
+                    /*
+                    Добавить проверку, чтобы получить размороженные токены можно было
+                    только 1 раз
+                     */
+                }
+            }
+        }
+
+
+
+
+        block += this.addIndents(4);
+        block += "}" + this.newLine;
+        this.contract += block;
+    }
+
+    finishContract() {
+        let block = "}" + this.newLine + this.newLine;
+        block += "global.registerContract(MyToken);";
         this.contract += block;
     }
 }
