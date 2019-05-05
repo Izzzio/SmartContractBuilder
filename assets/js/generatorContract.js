@@ -202,16 +202,20 @@ class generatorContract extends generatorMain {
         */
 
 
-        if(Object.keys(this.frozen).length){
+        if (Object.keys(this.frozen).length) {
             block += this.newLine;
             block += this.addCommentsLine('List of frozen tokens', 8);
             block += this.addIndents(8);
             block += "this.frozen = {" + this.newLine;
+
+            let keys = Object.keys(this.frozen);
+            let lastKey = keys[keys.length-1];
+
             for (let address in this.frozen) {
                 if (this.frozen.hasOwnProperty(address)) {
                     block += this.addIndents(12);
                     block += "'" + address + "': [" + this.newLine;
-                    for(let j = 0; j < this.frozen[address].length; j++) {
+                    for (let j = 0; j < this.frozen[address].length; j++) {
                         block += this.addIndents(16) + "{" + this.newLine;
                         if (this.frozen[address][j].addressName) {
                             block += this.addIndents(20);
@@ -221,10 +225,10 @@ class generatorContract extends generatorMain {
                         block += "'frozen': " + this.frozen[address][j].frozen + "," + this.newLine;
                         block += this.addIndents(20);
                         block += "'tokens': " + this.frozen[address][j].tokens + this.newLine;
-                        block += this.addIndents(16) + "}"+((j === this.frozen[address].length - 1) ? "" : ",")+ this.newLine;
+                        block += this.addIndents(16) + "}" + ((j === this.frozen[address].length - 1) ? "" : ",") + this.newLine;
                     }
                     block += this.addIndents(12);
-                    block += "]" + this.newLine;
+                    block += "]" + ((lastKey == address) ? '' : ',') + this.newLine;
                 }
             }
 
