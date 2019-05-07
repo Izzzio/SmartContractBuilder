@@ -185,38 +185,32 @@ class generatorContract extends generatorMain {
         if (Object.keys(this.frozen).length) {
             this.needUnfreeze = true;
             block += this.newLine;
-            block += this.addCommentsLine('List of frozen tokens', 8);
+            block += this.addCommentsLine('Storage of frozen tokens', 8);
             block += this.addIndents(8);
-            block += "this._frozen = {" + this.newLine;
-
-            let keys = Object.keys(this.frozen);
-            let lastKey = keys[keys.length - 1];
+            block += "this._dbFrozen = new BlockchainMap('frozen_tokens');" + this.newLine;
 
             for (let address in this.frozen) {
-                if (this.frozen.hasOwnProperty(address)) {
-                    block += this.addIndents(12);
-                    block += "'" + address + "': [" + this.newLine;
-                    for (let j = 0; j < this.frozen[address].length; j++) {
-                        block += this.addIndents(16) + "{" + this.newLine;
-                        if (this.frozen[address][j].addressName) {
-                            block += this.addIndents(20);
-                            block += "'addressName': '" + this.frozen[address][j].addressName + "'," + this.newLine;
-                        }
-                        block += this.addIndents(20);
-                        block += "'frozen': " + this.frozen[address][j].frozen + "," + this.newLine;
-                        block += this.addIndents(20);
-                        block += "'tokens': " + this.frozen[address][j].tokens + this.newLine;
-                        block += this.addIndents(16) + "}" + ((j === this.frozen[address].length - 1) ? "" : ",") + this.newLine;
-                    }
-                    block += this.addIndents(12);
-                    block += "]" + ((lastKey == address) ? '' : ',') + this.newLine;
+                if (!this.frozen.hasOwnProperty(address)) {
+                    continue;
                 }
+                block += this.addIndents(8);
+                block += "this._dbFrozen['" + address + "'] = [" + this.newLine;
+                for (let j = 0; j < this.frozen[address].length; j++) {
+                    block += this.addIndents(12) + "{" + this.newLine;
+                    if (this.frozen[address][j].addressName) {
+                        block += this.addIndents(16);
+                        block += "'addressName': '" + this.frozen[address][j].addressName + "'," + this.newLine;
+                    }
+                    block += this.addIndents(16);
+                    block += "'frozen': " + this.frozen[address][j].frozen + "," + this.newLine;
+                    block += this.addIndents(16);
+                    block += "'tokens': " + this.frozen[address][j].tokens + this.newLine;
+                    block += this.addIndents(12) + "}" + ((j === this.frozen[address].length - 1) ? "" : ",") + this.newLine;
+                }
+                block += this.addIndents(8);
+                block += "];" + this.newLine;
             }
-
-            block += this.addIndents(8);
-            block += "};" + this.newLine;
         }
-
 
         if (this.minting.length) {
             block += this.addIndents(8);
@@ -268,7 +262,6 @@ class generatorContract extends generatorMain {
         block += this.addIndents(4);
         let comments = [
             'Get your own tokens that have freeze is ended',
-            //'@param {String} address  Address for find tokens'
         ];
         block += this.addCommentsBlock(comments, 4);
         block += this.addIndents(4);
@@ -278,25 +271,42 @@ class generatorContract extends generatorMain {
 
 
 
+
         const addressForTokens = contracts.caller();
         const currTimestamp = moment().utc().valueOf();
-        for (let address in this._frozen) {
-            if (!this._frozen.hasOwnProperty(address)) {
+        for (let address in this._dbFrozen) {
+            if (!this._dbFrozen.hasOwnProperty(address)) {
                 continue;
             }
             if (address !== addressForTokens) {
                 continue;
             }
-            for(let i = 0; i < this._frozen[address].length; i++){
-                if(this._frozen[address][i].frozen >= currTimestamp){
-                    this._wallets.mint(addressForTokens, this._frozen[address][i].tokens);
-                    this._MintEvent.emit(addressForTokens, new BigNumber(this._frozen[address][i].tokens));
-
-                    /*
-                    Добавить проверку, чтобы получить размороженные токены можно было
-                    только 1 раз
-                     */
+            let cntTokensSent = 0;
+            let tokensAlreadySent = false;
+            for (let i = 0; i < this._dbFrozen[address].length; i++) {
+                if (currTimestamp <= this._dbFrozen[address][i].frozen) {
+                    continue;
                 }
+                if (this._dbFrozen[address][i].tokens > 0) {
+                    cntTokensSent += this._dbFrozen[address][i].tokens;
+                    this._wallets.mint(addressForTokens, this._dbFrozen[address][i].tokens);
+                    this._MintEvent.emit(addressForTokens, new BigNumber(this._dbFrozen[address][i].tokens));
+                    this._dbFrozen[address][i].tokens = 0;
+                } else {
+                    tokensAlreadySent = true;
+                }
+            }
+            if (cntTokensSent > 0) {
+                logger.info('Successfully sent ' + cntTokensSent + ' __REPLACE TOKEN NAME__');
+                break;
+            } else if(tokensAlreadySent){
+                logger.info('Tokens were sent to you earlier');
+                break;
+            } else {
+
+                //ТАК НЕЛЬЗЯ ПЕРЕПИСАТЬ!!!
+
+                logger.info('No available tokens');
             }
         }
 
