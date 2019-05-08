@@ -261,58 +261,75 @@ class generatorContract extends generatorMain {
         let block = this.newLine;
         block += this.addIndents(4);
         let comments = [
-            'Get your own tokens that have freeze is ended',
+            'Get tokens that have freeze is ended',
         ];
         block += this.addCommentsBlock(comments, 4);
         block += this.addIndents(4);
         block += "getTokensWithFreezeIsOver() {" + this.newLine;
-
-
-
-
-
-
-        const addressForTokens = contracts.caller();
-        const currTimestamp = moment().utc().valueOf();
-        for (let address in this._dbFrozen) {
-            if (!this._dbFrozen.hasOwnProperty(address)) {
-                continue;
-            }
-            if (address !== addressForTokens) {
-                continue;
-            }
-            let cntTokensSent = 0;
-            let tokensAlreadySent = false;
-            for (let i = 0; i < this._dbFrozen[address].length; i++) {
-                if (currTimestamp <= this._dbFrozen[address][i].frozen) {
-                    continue;
-                }
-                if (this._dbFrozen[address][i].tokens > 0) {
-                    cntTokensSent += this._dbFrozen[address][i].tokens;
-                    this._wallets.mint(addressForTokens, this._dbFrozen[address][i].tokens);
-                    this._MintEvent.emit(addressForTokens, new BigNumber(this._dbFrozen[address][i].tokens));
-                    this._dbFrozen[address][i].tokens = 0;
-                } else {
-                    tokensAlreadySent = true;
-                }
-            }
-            if (cntTokensSent > 0) {
-                logger.info('Successfully sent ' + cntTokensSent + ' __REPLACE TOKEN NAME__');
-                break;
-            } else if(tokensAlreadySent){
-                logger.info('Tokens were sent to you earlier');
-                break;
-            } else {
-
-                //ТАК НЕЛЬЗЯ ПЕРЕПИСАТЬ!!!
-
-                logger.info('No available tokens');
-            }
-        }
-
-
-
-
+        block += this.addIndents(8);
+        block += "const addressForTokens = contracts.caller();" + this.newLine;
+        block += this.addIndents(8);
+        block += "const currTimestamp = moment().utc().valueOf();" + this.newLine;
+        block += this.addIndents(8);
+        block += "for (let address in this._dbFrozen) {" + this.newLine;
+        block += this.addIndents(12);
+        block += "if (!this._dbFrozen.hasOwnProperty(address)) {" + this.newLine;
+        block += this.addIndents(16);
+        block += "continue;" + this.newLine;
+        block += this.addIndents(12);
+        block += "}" + this.newLine;
+        block += this.addIndents(12);
+        block += "if (address !== addressForTokens) {" + this.newLine;
+        block += this.addIndents(16);
+        block += "continue;" + this.newLine;
+        block += this.addIndents(12);
+        block += "}" + this.newLine;
+        block += this.addIndents(12);
+        block += "let cntTokensSent = 0;" + this.newLine;
+        block += this.addIndents(12);
+        block += "let tokensFrozenExist = false;" + this.newLine;
+        block += this.addIndents(12);
+        block += "for (let i = 0; i < this._dbFrozen[address].length; i++) {" + this.newLine;
+        block += this.addIndents(16);
+        block += "if (currTimestamp <= this._dbFrozen[address][i].frozen) {" + this.newLine;
+        block += this.addIndents(20);
+        block += "tokensFrozenExist = true;" + this.newLine;
+        block += this.addIndents(20);
+        block += "continue;" + this.newLine;
+        block += this.addIndents(16);
+        block += "}" + this.newLine;
+        block += this.addIndents(16);
+        block += "if (this._dbFrozen[address][i].tokens > 0) {" + this.newLine;
+        block += this.addIndents(20);
+        block += "cntTokensSent += this._dbFrozen[address][i].tokens;" + this.newLine;
+        block += this.addIndents(20);
+        block += "this._wallets.mint(addressForTokens, this._dbFrozen[address][i].tokens);" + this.newLine;
+        block += this.addIndents(20);
+        block += "this._MintEvent.emit(addressForTokens, new BigNumber(this._dbFrozen[address][i].tokens));" + this.newLine;
+        block += this.addIndents(20);
+        block += "this._dbFrozen[address][i].tokens = 0;" + this.newLine;
+        block += this.addIndents(16);
+        block += "}" + this.newLine;
+        block += this.addIndents(12);
+        block += "}" + this.newLine;
+        block += this.addIndents(12);
+        block += "if (cntTokensSent > 0) {" + this.newLine;
+        block += this.addIndents(16);
+        block += "logger.info('Successfully sent: ' + cntTokensSent);" + this.newLine;
+        block += this.addIndents(12);
+        block += "} else if (tokensFrozenExist) {" + this.newLine;
+        block += this.addIndents(16);
+        block += "logger.info('Tokens exist, but frozen.');" + this.newLine;
+        block += this.addIndents(12);
+        block += "} else {" + this.newLine;
+        block += this.addIndents(16);
+        block += "logger.info('All tokens are already unfrozen and sent to you');" + this.newLine;
+        block += this.addIndents(12);
+        block += "}" + this.newLine;
+        block += this.addIndents(12);
+        block += "break;" + this.newLine;
+        block += this.addIndents(8);
+        block += "}" + this.newLine;
         block += this.addIndents(4);
         block += "}" + this.newLine;
         this.contract += block;

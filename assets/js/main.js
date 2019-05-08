@@ -26,7 +26,7 @@ $(function () {
                 required: true
             },
             tkn_decimals: {
-                required: true
+                required: false
             }
         },
         errorPlacement: function () {
@@ -64,7 +64,7 @@ $(function () {
         block_1_fields[element] = $(this).valid() ? 1 : 0;
 
         const propOwn = Object.getOwnPropertyNames(block_1_fields);
-        if (3 === propOwn.length) {
+        if (2 === propOwn.length) {
             try {
                 for (var prop in block_1_fields) {
                     if (0 === block_1_fields[prop]) {
@@ -229,7 +229,7 @@ $(function () {
         let params = {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
-            'decimals': $('#tkn_decimals').val() || null,
+            //'decimals': $('#tkn_decimals').val() || null,
             'owner': $('#tkn_owner').val() || null,
             'minting': [],
             'mintingFeature': String($("input[name='future_minting_use']").prop('checked')),
