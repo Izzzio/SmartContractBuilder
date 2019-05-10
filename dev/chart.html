@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Doughnut Chart</title>
+    <link rel="stylesheet" href="../assets/components/bootstrap/bootstrap.min.css">
+    <script src="../assets/components/jquery/jquery.min.js"></script>
+    <script src="../assets/components/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/plugins/chartjs/chart.min.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+
+    <style>
+        .canvas-con {
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            min-height: 365px;
+            position: relative;
+        }
+
+        .canvas-con-inner {
+            height: 100%;
+        }
+
+        .canvas-con-inner, .legend-con {
+            display: inline-block;
+        }
+
+        .legend-con {
+            font-family: Roboto;
+            display: inline-block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        span {
+            display: inline-block;
+        }
+
+        span.chart-legend {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="canvas-con">
+    <div class="canvas-con-inner">
+        <canvas id="chart-area" height="250px"></canvas>
+    </div>
+    <div id="my-legend-con" class="legend-con"></div>
+</div>
+
+
+
+<button id="randomizeData">Randomize Data</button>
+<button id="addDataset">Add Dataset</button>
+<button id="removeDataset">Remove Dataset</button>
+<button id="addData">Add Data</button>
+<button id="removeData">Remove Data</button>
+<button id="changeCircleSize">Semi/Full Circle</button>
+<script>
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+    };
+
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                ],
+                backgroundColor: [
+                    window.chartColors.red,
+                    window.chartColors.orange,
+                    window.chartColors.yellow,
+                    window.chartColors.green,
+                    window.chartColors.blue,
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                'Red',
+                'Orange',
+                'Yellow',
+                'Green',
+                'Blue'
+            ]
+        },
+        options: {
+            responsive: true,
+            /*
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            legend: {
+                //position: 'right',
+            },
+            */
+            legend: false,
+            legendCallback: function(chart) {
+                var legendHtml = [];
+                legendHtml.push('<ul>');
+                var item = chart.data.datasets[0];
+                for (var i=0; i < item.data.length; i++) {
+                    legendHtml.push('<li>');
+                    legendHtml.push('<span class="chart-legend" style="background-color:' + item.backgroundColor[i] +'"></span>');
+                    legendHtml.push('<span class="chart-legend-label-text">' + item.data[i] + ' person - '+chart.data.labels[i]+' times</span>');
+                    legendHtml.push('</li>');
+                }
+
+                legendHtml.push('</ul>');
+                return legendHtml.join("");
+            },
+            title: {
+                display: true,
+                text: 'Total supply: 48 asf'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById('chart-area').getContext('2d');
+        window.myDoughnut = new Chart(ctx, config);
+
+        $('#my-legend-con').html(myDoughnut.generateLegend());
+
+    };
+
+    document.getElementById('randomizeData').addEventListener('click', function() {
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+                return randomScalingFactor();
+            });
+        });
+
+        window.myDoughnut.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+        var newDataset = {
+            backgroundColor: [],
+            data: [],
+            label: 'New dataset ' + config.data.datasets.length,
+        };
+
+        for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+
+            var colorName = colorNames[index % colorNames.length];
+            var newColor = window.chartColors[colorName];
+            newDataset.backgroundColor.push(newColor);
+        }
+
+        config.data.datasets.push(newDataset);
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('addData').addEventListener('click', function() {
+        if (config.data.datasets.length > 0) {
+            config.data.labels.push('data #' + config.data.labels.length);
+
+            var colorName = colorNames[config.data.datasets[0].data.length % colorNames.length];
+            var newColor = window.chartColors[colorName];
+
+            config.data.datasets.forEach(function(dataset) {
+                dataset.data.push(randomScalingFactor());
+                dataset.backgroundColor.push(newColor);
+            });
+
+            window.myDoughnut.update();
+        }
+    });
+
+    document.getElementById('removeDataset').addEventListener('click', function() {
+        config.data.datasets.splice(0, 1);
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('removeData').addEventListener('click', function() {
+        config.data.labels.splice(-1, 1); // remove the label first
+
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data.pop();
+            dataset.backgroundColor.pop();
+        });
+
+        window.myDoughnut.update();
+    });
+
+    document.getElementById('changeCircleSize').addEventListener('click', function() {
+        if (window.myDoughnut.options.circumference === Math.PI) {
+            window.myDoughnut.options.circumference = 2 * Math.PI;
+            window.myDoughnut.options.rotation = -Math.PI / 2;
+        } else {
+            window.myDoughnut.options.circumference = Math.PI;
+            window.myDoughnut.options.rotation = -Math.PI;
+        }
+
+        window.myDoughnut.update();
+    });
+</script>
+</body>
+
+</html>

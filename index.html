@@ -120,19 +120,23 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!--
                                 <div class="row form-group">
-                                        <div class="col-md-3">
-                                            <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
-                                            <input type="number" class="form-control input-lg" id="tkn_decimals" name="tkn_decimals" placeholder="18" min="0" max="50" step="1">
+                                    <div class="col-md-3">
+                                        <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
+                                        <input type="number" class="form-control input-lg" id="tkn_decimals" name="tkn_decimals" placeholder="18" min="0" max="50" step="1">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
+                                            <label></label>
                                         </div>
-                                        <div class="col-md-5">
-                                            <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                                                <label></label>
-                                            </div>
-                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.decimals.help">
-                                            </span>
-                                        </div>
+                                        <span class="help-block" data-i18n="eth_tkn_contract:fields.decimals.help">
+                                        </span>
+                                    </div>
                                 </div>
+                                -->
+
                             </div>
                         </form>
                     </div>
@@ -141,6 +145,7 @@
                 </div>
             </div>
 
+            <!--
             <div class="row">
                 <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
                     <div class="box box-default box-solid">
@@ -194,6 +199,7 @@
                 <div class="col-md-5">
                 </div>
             </div>
+            -->
 
             <div class="row">
                 <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
@@ -295,10 +301,40 @@
                 </div>
             </div>
 
-            <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="row" style="margin-top: 10px; margin-bottom: 27px;">
                 <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="save"></button>
+                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="create" disabled="disabled"></button>
                     <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" id="clear" style="margin-left: 20px;"></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
+                    <div class="box box-default box-solid">
+                        <form role="form" id="contract_preview">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label data-i18n="eth_tkn_contract:preview.label"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div id="preview" class="col-md-12">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
+                                        <button type="button" data-i18n="eth_tkn_contract:button.save" class="btn btn-lg btn-primary" id="save"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+                <div class="col-md-5">
                 </div>
             </div>
         </section>
@@ -339,7 +375,7 @@
                         <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%">
+                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%" data-name="frozen_use">
                             </span>
                             <div class="input-group">
                                 <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" data-name="frozen" readonly disabled style="width: 85%; margin-left: 15%;">
@@ -366,6 +402,11 @@
 <script src="assets/js/langs.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/chart.js"></script>
+<script src="assets/js/FileSaver.min.js"></script>
+
+<script src="assets/js/generatorMain.js"></script>
+<script src="assets/js/generatorContract.js"></script>
+
 <script src="assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="assets/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="assets/plugins/icheck/icheck.min.js"></script>
@@ -373,5 +414,7 @@
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
 <script src="assets/plugins/chartjs/chart.min.js"></script>
+<script src="assets/plugins/moment/min/moment.min.js"></script>
+
 </body>
 </html>

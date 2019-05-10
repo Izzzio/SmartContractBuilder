@@ -5,6 +5,7 @@ $(function () {
     var mintNewItem = 0;
     let mintForms = {};
     let chartWrapperName = 'chart-wrapper';
+    let formContractPreview = 'contract_preview';
 
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
@@ -26,7 +27,7 @@ $(function () {
                 required: true
             },
             tkn_decimals: {
-                required: true
+                required: false
             }
         },
         errorPlacement: function () {
@@ -64,7 +65,7 @@ $(function () {
         block_1_fields[element] = $(this).valid() ? 1 : 0;
 
         const propOwn = Object.getOwnPropertyNames(block_1_fields);
-        if (3 === propOwn.length) {
+        if (2 === propOwn.length) {
             try {
                 for (var prop in block_1_fields) {
                     if (0 === block_1_fields[prop]) {
@@ -98,19 +99,25 @@ $(function () {
             setBlocksUnavailable('step_5');
             setNewMintsStatus(0);
             setBlocksUnavailable(chartWrapperName);
+            setBlockPreviewUnavailable();
         }
         if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
-            $("#save").removeClass('disabled');
+            $("#create")
+                .prop('disabled', false)
+                .removeClass('disabled');
             setNewMintsStatus(1);
             setBlocksAvailable(chartWrapperName);
         } else {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            $("#save").addClass('disabled');
+            $("#create")
+                .prop('disabled', true)
+                .addClass('disabled');
             setNewMintsStatus(0);
             setBlocksUnavailable(chartWrapperName);
+            setBlockPreviewUnavailable();
         }
     }
 
@@ -120,6 +127,11 @@ $(function () {
 
     function setBlocksUnavailable(formId) {
         $('#' + formId).parent().find('div.overlay').show();
+    }
+
+    function setBlockPreviewUnavailable(){
+        setBlocksUnavailable(formContractPreview);
+        $("#preview").html('');
     }
 
 
@@ -214,7 +226,9 @@ $(function () {
     $('#clear').on('click', function () {
         $("input[type=text], input[type=number]").val('');
         $("#tkn_type_1").iCheck('check');
-        $("#save").addClass('disabled');
+        $("#create")
+            .prop('disabled', true)
+            .addClass('disabled');
         setBlocksUnavailable('step_3');
         setBlocksUnavailable('step_4');
         setBlocksUnavailable('step_5');
@@ -223,6 +237,42 @@ $(function () {
         });
         mintForms = {};
         updateChart();
+        setBlockPreviewUnavailable();
+    });
+
+    $("#create").on('click', function () {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#" + formContractPreview).offset().top
+        }, 2000);
+
+        let params = {
+            'name': $('#tkn_name').val() || null,
+            'symbol': $('#tkn_symbol').val() || null,
+            //'decimals': $('#tkn_decimals').val() || null,
+            'owner': $('#tkn_owner').val() || null,
+            'minting': [],
+            'mintingFeature': String($("input[name='future_minting_use']").prop('checked')),
+        };
+
+        let collectedData = collectMintNewData();
+        collectedData.forEach(function (element) {
+            params.minting.push({
+                'address': element.addr,
+                'addressName': element.name.length ? element.name : '',
+                'tokens': element.tkns,
+                'frozen': element.frozen
+            });
+        });
+
+        let contractHandler = new generatorContract();
+        contractHandler.newContract(params);
+        let contract = contractHandler.getPreview();
+        setBlocksAvailable(formContractPreview);
+        $("#preview").html('<pre><code>' + (contract.length ? contract : 'Code contract empty.') + '</code></pre>');
+
+        $("#save").off('click').on('click', function () {
+            contractHandler.downloadContract('contract.js', contract);
+        });
     });
 
     let setNewMintsStatus = function (statusNew) {
@@ -269,7 +319,7 @@ $(function () {
     };
 
     let updateChart = function () {
-        let data = collectMintNewData();
+        let data = collectMintNewDataForChart();
 
         $("#" + chartWrapperName).hide();
 
@@ -298,11 +348,10 @@ $(function () {
     };
 
     let collectMintNewData = function () {
-        let res = {'address': [], 'tokens': [], 'amount': 0};
         let collectedData = [];
         $("form[id^='" + mintNewNameTPL + "']").each(function (formNum) {
             if (!collectedData[formNum]) {
-                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': ''};
+                collectedData[formNum] = {'addr': '', 'name': '', 'tkns': '', 'frozen': false};
             }
             let fields = $(this).find(":input");
             fields.each(function (key, field) {
@@ -313,15 +362,24 @@ $(function () {
                 } else if ('name' === fieldName) {
                     collectedData[formNum].name = field.val();
                 } else if ('amount' === fieldName) {
-                    collectedData[formNum].tkns = field.val();
+                    collectedData[formNum].tkns = Number(field.val());
+                } else if ('frozen_use' === fieldName && field.prop('checked')) {
+                    field = $(fields[key+1]);
+                    collectedData[formNum].frozen = field.val();
                 }
             })
         });
+        return collectedData;
+    };
+
+    let collectMintNewDataForChart = function () {
+        let res = {'address': [], 'tokens': [], 'amount': 0};
+        let collectedData = collectMintNewData();
         collectedData.forEach(function (element) {
             res.address.push(element.name.length ? element.name : element.addr);
             res.tokens.push(element.tkns);
             res.amount = Number(res.amount) + Number(element.tkns);
         });
         return res;
-    }
+    };
 });
