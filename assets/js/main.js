@@ -5,6 +5,7 @@ $(function () {
     var mintNewItem = 0;
     let mintForms = {};
     let chartWrapperName = 'chart-wrapper';
+    let formContractPreview = 'contract_preview';
 
     $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
         checkboxClass: 'icheckbox_flat-blue',
@@ -98,19 +99,25 @@ $(function () {
             setBlocksUnavailable('step_5');
             setNewMintsStatus(0);
             setBlocksUnavailable(chartWrapperName);
+            setBlockPreviewUnavailable();
         }
         if (blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
-            $("#create").removeClass('disabled');
+            $("#create")
+                .prop('disabled', false)
+                .removeClass('disabled');
             setNewMintsStatus(1);
             setBlocksAvailable(chartWrapperName);
         } else {
             setBlocksUnavailable('step_4');
             setBlocksUnavailable('step_5');
-            $("#create").addClass('disabled');
+            $("#create")
+                .prop('disabled', true)
+                .addClass('disabled');
             setNewMintsStatus(0);
             setBlocksUnavailable(chartWrapperName);
+            setBlockPreviewUnavailable();
         }
     }
 
@@ -120,6 +127,11 @@ $(function () {
 
     function setBlocksUnavailable(formId) {
         $('#' + formId).parent().find('div.overlay').show();
+    }
+
+    function setBlockPreviewUnavailable(){
+        setBlocksUnavailable(formContractPreview);
+        $("#preview").html('');
     }
 
 
@@ -214,7 +226,9 @@ $(function () {
     $('#clear').on('click', function () {
         $("input[type=text], input[type=number]").val('');
         $("#tkn_type_1").iCheck('check');
-        $("#create").addClass('disabled');
+        $("#create")
+            .prop('disabled', true)
+            .addClass('disabled');
         setBlocksUnavailable('step_3');
         setBlocksUnavailable('step_4');
         setBlocksUnavailable('step_5');
@@ -223,9 +237,14 @@ $(function () {
         });
         mintForms = {};
         updateChart();
+        setBlockPreviewUnavailable();
     });
 
     $("#create").on('click', function () {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#" + formContractPreview).offset().top
+        }, 2000);
+
         let params = {
             'name': $('#tkn_name').val() || null,
             'symbol': $('#tkn_symbol').val() || null,
@@ -248,11 +267,12 @@ $(function () {
         let contractHandler = new generatorContract();
         contractHandler.newContract(params);
         let contract = contractHandler.getPreview();
-        if(contract.length){
-            $("#preview").html('<pre><code>' + contract + '</code></pre>');
-        } else {
-            console.log('Code contract empty.');
-        }
+        setBlocksAvailable(formContractPreview);
+        $("#preview").html('<pre><code>' + (contract.length ? contract : 'Code contract empty.') + '</code></pre>');
+
+        $("#save").off('click').on('click', function () {
+            contractHandler.downloadContract('contract.js', contract);
+        });
     });
 
     let setNewMintsStatus = function (statusNew) {

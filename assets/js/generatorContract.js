@@ -69,7 +69,7 @@ class generatorContract extends generatorMain {
         this.addMethodInit();
         this.addMethodContractInfo();
 
-        if(this.needUnfreeze) {
+        if (this.needUnfreeze) {
             this.addMethodUnfreeze();
         }
 
@@ -160,7 +160,7 @@ class generatorContract extends generatorMain {
     }
 
     buildContract() {
-        let block = this.newLine + this.newLine;
+        let block = '';
         let comments = [
             'Main token contract'
         ];
@@ -257,7 +257,7 @@ class generatorContract extends generatorMain {
         this.contract += block;
     }
 
-    addMethodUnfreeze(){
+    addMethodUnfreeze() {
         let block = this.newLine;
         block += this.addIndents(4);
         let comments = [
@@ -341,31 +341,3 @@ class generatorContract extends generatorMain {
         this.contract += block;
     }
 }
-
-
-/*
-function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:application/javascript;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-}
-
-var filename = "contract.js";
-var text = 'text';
-download(filename, text);
-*/
-
-/*
-var content = "What's up , hello world";
-var filename = "contract.js";
-
-var blob = new Blob([content], {
-    type: "application/javascript;charset=utf-8"
-});
-
-saveAs(blob, filename);
-*/

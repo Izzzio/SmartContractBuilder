@@ -303,7 +303,7 @@
 
             <div class="row" style="margin-top: 10px; margin-bottom: 27px;">
                 <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="create"></button>
+                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="create" disabled="disabled"></button>
                     <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" id="clear" style="margin-left: 20px;"></button>
                 </div>
             </div>
@@ -311,6 +311,7 @@
             <div class="row">
                 <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
                     <div class="box box-default box-solid">
+                        <form role="form" id="contract_preview">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-7">
@@ -329,6 +330,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <div class="overlay"></div>
                     </div>
                 </div>
                 <div class="col-md-5">
