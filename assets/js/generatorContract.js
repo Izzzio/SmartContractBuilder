@@ -310,8 +310,6 @@ class generatorContract extends generatorMain {
         block += "console.log('All tokens are already unfrozen and sent to you');" + this.newLine;
         block += this.addIndents(8);
         block += "}" + this.newLine;
-        block += this.addIndents(8);
-        block += "break;" + this.newLine;
         block += this.addIndents(4);
         block += "}" + this.newLine;
         this.contract += block;
