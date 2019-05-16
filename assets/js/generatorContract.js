@@ -188,28 +188,31 @@ class generatorContract extends generatorMain {
             block += this.addCommentsLine('Storage of frozen tokens', 8);
             block += this.addIndents(8);
             block += "this._dbFrozen = new BlockchainMap('frozen_tokens');" + this.newLine;
-
+            block += this.addIndents(8);
+            block += "if (contracts.isDeploy()) {" + this.newLine;
             for (let address in this.frozen) {
                 if (!this.frozen.hasOwnProperty(address)) {
                     continue;
                 }
-                block += this.addIndents(8);
+                block += this.addIndents(12);
                 block += "this._dbFrozen['" + address + "'] = [" + this.newLine;
                 for (let j = 0; j < this.frozen[address].length; j++) {
-                    block += this.addIndents(12) + "{" + this.newLine;
+                    block += this.addIndents(16) + "{" + this.newLine;
                     if (this.frozen[address][j].addressName) {
-                        block += this.addIndents(16);
+                        block += this.addIndents(20);
                         block += "'addressName': '" + this.frozen[address][j].addressName + "'," + this.newLine;
                     }
-                    block += this.addIndents(16);
+                    block += this.addIndents(20);
                     block += "'frozen': " + this.frozen[address][j].frozen + "," + this.newLine;
-                    block += this.addIndents(16);
+                    block += this.addIndents(20);
                     block += "'tokens': " + this.frozen[address][j].tokens + this.newLine;
-                    block += this.addIndents(12) + "}" + ((j === this.frozen[address].length - 1) ? "" : ",") + this.newLine;
+                    block += this.addIndents(16) + "}" + ((j === this.frozen[address].length - 1) ? "" : ",") + this.newLine;
                 }
-                block += this.addIndents(8);
+                block += this.addIndents(12);
                 block += "];" + this.newLine;
             }
+            block += this.addIndents(8);
+            block += "}" + this.newLine;
         }
 
         if (this.minting.length) {
