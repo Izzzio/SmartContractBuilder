@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>iZ³</title>
+    <title>iZ³ Smart contract builder</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="assets/components/bootstrap/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/custom.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="assets/lte/css/AdminLTE.min.css">
@@ -61,9 +62,9 @@
         <section class="sidebar">
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
-                <li class="active">
-                    <a href="">
-                        <i class="fa fa-plus-circle"></i> <span data-i18n="eth_tkn_contract:menu.create"></span>
+                <li class="">
+                    <a href="tokenContract.html">
+                        <i class="fas fa-coins"></i> <span data-i18n="eth_tkn_contract:menu.create"></span>
                         <span class="pull-right-container">
                         </span>
                     </a>
@@ -74,267 +75,19 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1 data-i18n="eth_tkn_contract:menu.create"></h1>
+            <h1>Select contract</h1>
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-info box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">
-                                <i class="fab fa-ethereum"></i>
-                                <span data-i18n="eth_tkn_contract:header.main"></span>
-                                <small style="color: white;" data-i18n="eth_tkn_contract:header.description"></small>
-                            </h3>
-                        </div>
-                        <form role="form" id="step_1">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-7">
-                                            <label for="tkn_name" data-i18n="eth_tkn_contract:fields.name.label"></label>
-                                            <input type="text" class="form-control input-lg" id="tkn_name" name="tkn_name" data-i18n="[placeholder]eth_tkn_contract:fields.name.placeholder">
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                                                <label></label>
-                                            </div>
-                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.name.help">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-7">
-                                            <label for="tkn_symbol" data-i18n="eth_tkn_contract:fields.symbol.label"></label>
-                                            <input type="text" class="form-control input-lg" id="tkn_symbol" name="tkn_symbol" data-i18n="[placeholder]eth_tkn_contract:fields.symbol.placeholder">
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                                                <label></label>
-                                            </div>
-                                            <span class="help-block" data-i18n="[html]eth_tkn_contract:fields.symbol.help">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="tkn_decimals" data-i18n="eth_tkn_contract:fields.decimals.label"></label>
-                                        <input type="number" class="form-control input-lg" id="tkn_decimals" name="tkn_decimals" placeholder="18" min="0" max="50" step="1">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                                            <label></label>
-                                        </div>
-                                        <span class="help-block" data-i18n="eth_tkn_contract:fields.decimals.help">
-                                        </span>
-                                    </div>
-                                </div>
-                                -->
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-
-            <!--
-            <div class="row">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-default box-solid">
-                        <form role="form" id="step_2">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <label data-i18n="eth_tkn_contract:tkn_type.label"></label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            <div class="radio">
-                                                <label style="padding-left: 0px;">
-                                                    <input type="radio" id="tkn_type_1" name="tkn_type" value="20" class="flat-blue" checked="checked">
-                                                    <strong data-i18n="eth_tkn_contract:fields.type_1.label"></strong>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="radio">
-                                                <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.type_1.help">
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            <div class="radio">
-                                                <label style="padding-left: 0px;">
-                                                    <input type="radio" id="tkn_type_2" name="tkn_type" value="223" class="flat-blue">
-                                                    <strong data-i18n="eth_tkn_contract:fields.type_2.label"></strong>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="radio">
-                                                <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.type_2.help">
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-            -->
-
-            <div class="row">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-default box-solid">
-                        <form role="form" id="step_3">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-8">
-                                            <label for="tkn_owner" data-i18n="eth_tkn_contract:fields.owner.label"></label>
-                                            <input type="text" class="form-control input-lg" id="tkn_owner" name="tkn_owner" data-i18n="[placeholder]eth_tkn_contract:fields.owner.placeholder">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                                                <label></label>
-                                            </div>
-                                            <span class="help-block" data-i18n="eth_tkn_contract:fields.owner.help">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="overlay"></div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-
-            <div class="row" id="mint_new_wrapper">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-default box-solid" id="mint_new_main">
-                        <form role="form" id="step_4">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-5 vcenter">
-                                        <button type="button" data-i18n="[html]eth_tkn_contract:fields.mint.label" class="btn btn-lg btn-primary" id="mint_new"></button>
-                                    </div>
-                                    <div class="col-md-6 vcenter">
-                                        <span class="help-block help-mini" data-i18n="eth_tkn_contract:fields.mint.help">
-                                        </span>
-                                    </div>
-                                    <div class="col-md-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="overlay"></div>
-                    </div>
-                    <div>
-                        <div class="box box-default box-solid" id="chart-wrapper" style="display: none;">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-10 col-xs-12 m-top-15">
-                                        <canvas id="chart-area" width="100" height="100"></canvas>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-1 hidden-xs">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="overlay" style="display: none;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-default box-solid">
-                        <form role="form" id="step_5">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-3 col-xs-7 vcenter">
-                                        <label data-i18n="[html]eth_tkn_contract:fields.future_minting.label"></label>
-                                    </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-5 vcenter">
-                                        <input type="checkbox" disabled="disabled" checked="checked" class="chkx-toogle-main" name="future_minting_use">
-                                    </div>
-                                    <div class="col-md-6 col-sm-7 col-xs-12 vcenter">
-                                        <span class="help-block help-mini" data-i18n="[html]eth_tkn_contract:fields.future_minting.help">
-                                        </span>
-                                    </div>
-                                    <div class="col-md-1 col-sm-7 col-xs-12">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="overlay"></div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                </div>
-            </div>
-
-            <div class="row" style="margin-top: 10px; margin-bottom: 27px;">
-                <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                    <button type="button" data-i18n="eth_tkn_contract:button.create" class="btn btn-lg btn-primary disabled" id="create" disabled="disabled"></button>
-                    <button type="button" data-i18n="[html]eth_tkn_contract:button.clean" class="btn btn-lg btn-default text-red" id="clear" style="margin-left: 20px;"></button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-7 col-md-9 col-sm-10 col-xs-12">
-                    <div class="box box-default box-solid">
-                        <form role="form" id="contract_preview">
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <label data-i18n="eth_tkn_contract:preview.label"></label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div id="preview" class="col-md-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
-                                    <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
-                                        <button type="button" data-i18n="eth_tkn_contract:button.save" class="btn btn-lg btn-primary" id="save"></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="overlay"></div>
-                    </div>
-                </div>
-                <div class="col-md-5">
+            <div class="col-md-12">
+                <div class="jumbotron panel col-md-3" style="text-align: center">
+                    <h1><i class="fas fa-coins"></i></h1>
+                    <h2>Token contract</h2>
+                    <p>The token contract allows you to release your token for transfer and storage on the wallet. A
+                        token can be issued in any quantities, set any suitable name for it, freeze the release of
+                        tokens for different classes until a certain event occurs.</p>
+                    <p><a class="btn btn-primary btn-lg" href="tokenContract.html" role="button">Build token
+                        contract</a></p>
                 </div>
             </div>
         </section>
@@ -346,49 +99,6 @@
     </footer>
 </div>
 
-<div id="mint_new_tpl" style="display: none;">
-    <div class="box box-default box-solid" data-id="%%MINT_NEW_FORM_ID%%" style="margin-bottom: 0px;">
-        <form role="form" id="%%MINT_NEW_FORM_ID%%">
-            <div class="box-body">
-                <i class="fas fa-lg fa-times-circle text-primary mint-new-cancel" data-wrapper="%%MINT_NEW_FORM_ID%%" style="float: right"></i>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label data-i18n="eth_tkn_contract:mint_new.label"></label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 m-top-15">
-                        <label for="mint_new_address_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.address.label"></label>
-                        <input type="text" class="form-control input-lg need-validate" id="mint_new_address_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][address]" data-name="address" data-i18n="[placeholder]eth_tkn_contract:blocks.mint_new.address.placeholder">
-                    </div>
-                    <div class="col-md-4 m-top-15">
-                        <label for="mint_new_name_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.name.label"></label>
-                        <input type="text" class="form-control input-lg watch-changes" id="mint_new_name_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][name]" data-name="name">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 m-top-15">
-                        <label for="mint_new_amount_%%FRM-NUM%%" data-i18n="eth_tkn_contract:blocks.mint_new.amount.label"></label>
-                        <input type="text" maxlength="20" pattern="[0-9]+([\.][0-9]+)?" class="form-control input-lg need-validate" id="mint_new_amount_%%FRM-NUM%%" name="mint_new[%%FRM-NUM%%][amount]" data-name="amount">
-                    </div>
-                    <div class="col-md-6 m-top-15">
-                        <label data-i18n="[html]eth_tkn_contract:blocks.mint_new.frozen.label"></label>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <input type="checkbox" class="frozen_use" name="mint_new[%%FRM-NUM%%][frozen_use]" data-form="%%FRM-NUM%%" data-name="frozen_use">
-                            </span>
-                            <div class="input-group">
-                                <input type="text" class="form-control input-lg datepicker" id="mint_new_frozen" name="mint_new[%%FRM-NUM%%][frozen]" data-name="frozen" readonly disabled style="width: 85%; margin-left: 15%;">
-                                <span class="input-group-addon"><i class="far fa-calendar-alt fa-lg text-primary"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="overlay" style="display: none;"></div>
-    </div>
-</div>
 
 <!-- jQuery 3 -->
 <script src="assets/components/jquery/jquery.min.js"></script>
