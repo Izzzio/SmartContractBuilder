@@ -25,35 +25,35 @@ class generatorContract extends generatorMain {
 
     newContract(params) {
         if (params.name) {
-            this.addName(params.name);
+            this.addName(params.name.trim());
         }
         if (params.symbol) {
-            this.addSymbol(params.symbol);
+            this.addSymbol(params.symbol.trim());
         }
         if (params.decimals) {
             this.addDecimals(params.decimals);
         }
         if (params.owner) {
-            this.addOwner(params.owner);
+            this.addOwner(params.owner.trim());
         }
         if (params.minting) {
             let tokenAddress = false;
             for (let i = 0; i < params.minting.length; i++) {
                 if (Number(params.minting[i].tokens) > 0) {
-                    tokenAddress = params.minting[i].address;
+                    tokenAddress = params.minting[i].address.trim();
                     if (params.minting[i].frozen) {
                         if (!this.frozen.hasOwnProperty(tokenAddress)) {
                             this.frozen[tokenAddress] = [];
                         }
                         this.frozen[tokenAddress].push({
-                            'addressName': params.minting[i].addressName,
+                            'addressName': params.minting[i].addressName.trim(),
                             'tokens': params.minting[i].tokens,
                             'frozen': moment(moment(params.minting[i].frozen, "DD.MM.YYYY")).valueOf()
                         });
                     } else {
                         this.minting.push({
                             'address': tokenAddress,
-                            'addressName': params.minting[i].addressName,
+                            'addressName': params.minting[i].addressName.trim(),
                             'tokens': params.minting[i].tokens
                         });
                     }
