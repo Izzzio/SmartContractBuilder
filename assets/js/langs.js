@@ -21,28 +21,28 @@ $(function () {
             en: {
                 page: {
                     logo: {
-                        big: "<b>iZ³</b> Tokensale platform"
+                        big: "<b>iZ³</b> Contracts Builder"
                     },
                     copyrights: "All rights reserved."
                 },
                 eth_tkn_contract: {
                     menu: {
-                        create: "Create contract"
+                        create: "Token contract"
                     },
                     header: {
                         main: "Token contract",
-                        description: "(Main Ethereum Network)"
+                        description: ""
                     },
                     fields: {
                         name: {
                             label: "Token name:",
-                            placeholder: "MyNewProjectToken",
+                            placeholder: "MyToken",
                             help: "Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"
                         },
                         symbol: {
                             label: "Token symbol:",
                             placeholder: "NEW",
-                            help: "Usually 3-4 Letters like ETH, BTC, NEO, WISH etc.. Please check that it’s unique before submission <a href='https://etherscan.com/tokens'>(https://etherscan.com/tokens)</a>"
+                            help: "Usually 3-4 Letters like ETH, BTC, NEO, WISH etc..."
                         },
                         decimals: {
                             label: "Decimals:",
@@ -58,8 +58,8 @@ $(function () {
                         },
                         owner: {
                             label: "Token Owner:",
-                            placeholder: "0xD0593B233Be4411A236F22b42087345E1137170b",
-                            help: "ETH address (not exchange address). This address will be owner of the token (after sale end date). Double check the address (and access to it) before submission"
+                            placeholder: "izM1Tr1nhKaeDMqUaZjHqaWzjZmCndnUhML",
+                            help: "Owner or smart contract address. This address will be owner of the token. Double check the address (and access to it) before submission"
                         },
                         mint: {
                             label: "<i class='fas fa-plus-circle'></i>&nbsp;&nbsp;Mint tokens",
@@ -71,7 +71,7 @@ $(function () {
                         },
                         future_minting: {
                             label: "<i class='far fa-stop-circle text-primary'></i>&nbsp;&nbsp;Future Minting",
-                            help: "Yes - you can create more tokens in the future & use token for Crowdsale.<br />No - no more tokens will be created in the future. Crowdsale is impossible."
+                            help: "Yes - you can create more tokens in the future.<br />No - no more tokens will be created in the future."
                         }
                     },
                     blocks: {

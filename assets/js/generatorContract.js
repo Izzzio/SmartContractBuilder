@@ -24,25 +24,25 @@ class generatorContract extends generatorMain {
     }
 
     newContract(params) {
-        if (params.name) {
+        if(params.name) {
             this.addName(params.name.trim());
         }
-        if (params.symbol) {
+        if(params.symbol) {
             this.addSymbol(params.symbol.trim());
         }
-        if (params.decimals) {
+        if(params.decimals) {
             this.addDecimals(params.decimals);
         }
-        if (params.owner) {
+        if(params.owner) {
             this.addOwner(params.owner.trim());
         }
-        if (params.minting) {
+        if(params.minting) {
             let tokenAddress = false;
             for (let i = 0; i < params.minting.length; i++) {
-                if (Number(params.minting[i].tokens) > 0) {
+                if(Number(params.minting[i].tokens) > 0) {
                     tokenAddress = params.minting[i].address.trim();
-                    if (params.minting[i].frozen) {
-                        if (!this.frozen.hasOwnProperty(tokenAddress)) {
+                    if(params.minting[i].frozen) {
+                        if(!this.frozen.hasOwnProperty(tokenAddress)) {
                             this.frozen[tokenAddress] = [];
                         }
                         this.frozen[tokenAddress].push({
@@ -61,7 +61,7 @@ class generatorContract extends generatorMain {
             }
         }
 
-        if (params.mintingFeature) {
+        if(params.mintingFeature) {
             this.mintingFeature = params.mintingFeature;
         }
 
@@ -69,7 +69,7 @@ class generatorContract extends generatorMain {
         this.addMethodInit();
         this.addMethodContractInfo();
 
-        if (this.needUnfreeze) {
+        if(this.needUnfreeze) {
             this.addMethodUnfreeze();
         }
 
@@ -182,7 +182,7 @@ class generatorContract extends generatorMain {
         block += this.addIndents(8);
         block += "super.init(0, mintable);" + this.newLine;
 
-        if (Object.keys(this.frozen).length) {
+        if(Object.keys(this.frozen).length) {
             this.needUnfreeze = true;
             block += this.newLine;
             block += this.addCommentsLine('Storage of frozen tokens', 8);
@@ -191,14 +191,14 @@ class generatorContract extends generatorMain {
             block += this.addIndents(8);
             block += "if (contracts.isDeploy()) {" + this.newLine;
             for (let address in this.frozen) {
-                if (!this.frozen.hasOwnProperty(address)) {
+                if(!this.frozen.hasOwnProperty(address)) {
                     continue;
                 }
                 block += this.addIndents(12);
                 block += "this._dbFrozen['" + address + "'] = [" + this.newLine;
                 for (let j = 0; j < this.frozen[address].length; j++) {
                     block += this.addIndents(16) + "{" + this.newLine;
-                    if (this.frozen[address][j].addressName) {
+                    if(this.frozen[address][j].addressName) {
                         block += this.addIndents(20);
                         block += "'addressName': '" + this.frozen[address][j].addressName + "'," + this.newLine;
                     }
@@ -215,7 +215,7 @@ class generatorContract extends generatorMain {
             block += "}" + this.newLine;
         }
 
-        if (this.minting.length) {
+        if(this.minting.length) {
             block += this.addIndents(8);
             block += "if (contracts.isDeploy()) {" + this.newLine;
             for (let i = 0; i < this.minting.length; i++) {

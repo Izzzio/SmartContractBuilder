@@ -1,4 +1,4 @@
-if (!String.prototype.trim) {
+if(!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
     };
@@ -65,16 +65,16 @@ $(function () {
     $('#step_1').on('change click keyup', 'input', function () {
         blocksFilled[1] = false;
         let element = $(this).attr('name');
-        if (!block_1_fields[element]) {
+        if(!block_1_fields[element]) {
             block_1_fields[element] = 0;
         }
         block_1_fields[element] = $(this).valid() ? 1 : 0;
 
         const propOwn = Object.getOwnPropertyNames(block_1_fields);
-        if (2 === propOwn.length) {
+        if(2 === propOwn.length) {
             try {
                 for (var prop in block_1_fields) {
-                    if (0 === block_1_fields[prop]) {
+                    if(0 === block_1_fields[prop]) {
                         throw new Error();
                     }
                 }
@@ -88,7 +88,7 @@ $(function () {
     var block_3_fields = {};
     $('#step_3').on('change click keyup', 'input', function () {
         let element = $(this).attr('name');
-        if (!block_3_fields[element]) {
+        if(!block_3_fields[element]) {
             block_3_fields[element] = 0;
         }
         block_3_fields[element] = $(this).valid() ? 1 : 0;
@@ -97,7 +97,7 @@ $(function () {
     });
 
     function updateBlocksAvailability() {
-        if (blocksFilled[1]) {
+        if(blocksFilled[1]) {
             setBlocksAvailable('step_3')
         } else {
             setBlocksUnavailable('step_3');
@@ -107,7 +107,7 @@ $(function () {
             setBlocksUnavailable(chartWrapperName);
             setBlockPreviewUnavailable();
         }
-        if (blocksFilled[1] && blocksFilled[3]) {
+        if(blocksFilled[1] && blocksFilled[3]) {
             setBlocksAvailable('step_4');
             setBlocksAvailable('step_5');
             $("#create")
@@ -135,7 +135,7 @@ $(function () {
         $('#' + formId).parent().find('div.overlay').show();
     }
 
-    function setBlockPreviewUnavailable(){
+    function setBlockPreviewUnavailable() {
         setBlocksUnavailable(formContractPreview);
         $("#preview").html('');
     }
@@ -167,7 +167,7 @@ $(function () {
             .change(function () {
                 let $this = $(this);
                 let formId = $this.data('form') || 0;
-                if ($this.prop('checked')) {
+                if($this.prop('checked')) {
                     $('[name="mint_new[' + formId + '][frozen]"]', block).removeAttr('disabled');
                 } else {
                     $('[name="mint_new[' + formId + '][frozen]"]', block).prop('disabled', true);
@@ -194,13 +194,13 @@ $(function () {
             .on('change click keyup', '.need-validate', function () {
                 updateFormStateStorage(formId, $(this));
                 let isNeedUpdateChart = checkForm(formId);
-                if (isNeedUpdateChart) {
+                if(isNeedUpdateChart) {
                     updateChart();
                 }
             })
             .on('keyup', '.watch-changes', function () {
                 let isNeedUpdateChart = checkForm(formId);
-                if (isNeedUpdateChart) {
+                if(isNeedUpdateChart) {
                     updateChart();
                 }
             })
@@ -218,7 +218,7 @@ $(function () {
 
     $('#mint_new_wrapper').on('click', '.mint-new-cancel', function () {
         let wrapper = $(this).data('wrapper') || false;
-        if (wrapper) {
+        if(wrapper) {
             delete mintForms[wrapper];
             $('[data-id=' + wrapper + ']', $('#mint_new_wrapper')).remove();
             updateChart();
@@ -291,10 +291,10 @@ $(function () {
 
     let updateFormStateStorage = function (formId, el) {
         let fieldId = el.attr('id') || false;
-        if (!mintForms[formId]) {
+        if(!mintForms[formId]) {
             mintForms[formId] = {};
         }
-        if (fieldId) {
+        if(fieldId) {
             mintForms[formId][fieldId] = el.valid() ? 1 : 0;
         }
     };
@@ -303,10 +303,10 @@ $(function () {
         let result = false;
         $(".need-validate", "#" + formId).each(function (key, el) {
             let form = mintForms[formId] || false;
-            if (form) {
+            if(form) {
                 let fieldId = $(this).attr('id') || false;
                 let fieldValid = mintForms[formId][fieldId] || false;
-                if (!fieldId || !fieldValid) {
+                if(!fieldId || !fieldValid) {
                     result = false;
                     return false;
                 }
@@ -314,9 +314,9 @@ $(function () {
             }
         });
 
-        if (result) {
+        if(result) {
             const propOwn = Object.getOwnPropertyNames(mintForms[formId]);
-            if (2 !== propOwn.length) {
+            if(2 !== propOwn.length) {
                 result = false;
             }
         }
@@ -329,7 +329,7 @@ $(function () {
 
         $("#" + chartWrapperName).hide();
 
-        if (data.amount > 0) {
+        if(data.amount > 0) {
 
             $("input[name='future_minting_use']")
                 .prop('disabled', false)
@@ -356,21 +356,21 @@ $(function () {
     let collectMintNewData = function () {
         let collectedData = [];
         $("form[id^='" + mintNewNameTPL + "']").each(function (formNum) {
-            if (!collectedData[formNum]) {
+            if(!collectedData[formNum]) {
                 collectedData[formNum] = {'addr': '', 'name': '', 'tkns': '', 'frozen': false};
             }
             let fields = $(this).find(":input");
             fields.each(function (key, field) {
                 field = $(field);
                 let fieldName = field.data('name') || '';
-                if ('address' === fieldName) {
+                if('address' === fieldName) {
                     collectedData[formNum].addr = field.val();
-                } else if ('name' === fieldName) {
+                } else if('name' === fieldName) {
                     collectedData[formNum].name = field.val();
-                } else if ('amount' === fieldName) {
+                } else if('amount' === fieldName) {
                     collectedData[formNum].tkns = Number(field.val());
-                } else if ('frozen_use' === fieldName && field.prop('checked')) {
-                    field = $(fields[key+1]);
+                } else if('frozen_use' === fieldName && field.prop('checked')) {
+                    field = $(fields[key + 1]);
                     collectedData[formNum].frozen = field.val();
                 }
             })
